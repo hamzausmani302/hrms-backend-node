@@ -7,7 +7,8 @@ const ProjectSchema = mongoose.Schema({
         type : String, 
         minLength : 4,
         required : true,
-        maxLength : 50
+        maxLength : 50,
+        unique : true
     },
     description : {
         type : String,
@@ -34,7 +35,7 @@ const ProjectSchema = mongoose.Schema({
     },
     teamLead : {
         type : mongoose.Types.ObjectId,
-        required: true
+       
     },
     status : {
         type : String,
