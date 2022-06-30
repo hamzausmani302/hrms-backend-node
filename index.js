@@ -3,15 +3,16 @@ const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
 const ProjectRouter = require('./src/Routes/projectRouter')
-
+const DeveloperRouter = require('./src/Routes/developerRouter')
  
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
-app.use(helmet())
+app.use(helmet())       //for security headers 
 
 app.use("/project",ProjectRouter);
+app.use("/developer" , DeveloperRouter)
 
 
 

@@ -1,14 +1,12 @@
 const mongoose = require("mongoose")
 
-
-
 const AdministratorSchema = mongoose.Schema({
     name : {
         type : String ,
         maxLength :50,
         required:true,
-
     },
+
     address : {
         type : String , 
         maxLength : 100,
@@ -19,8 +17,16 @@ const AdministratorSchema = mongoose.Schema({
         type : String , 
         required : true,
         unique : true,
-        minLength :6 
+        minLength :6 ,
+        validate: {
+            validator: function(v) {
+              return validator.validate(v);
+            },
+            message: 'Invalid email format'
+          },
+        
     },
+    
     password : {
         type : String , 
         required : true,
@@ -28,6 +34,7 @@ const AdministratorSchema = mongoose.Schema({
     },
     joiningDate : {
         type : Date, 
+        default : Date.now()
           
     },
     rights : {
