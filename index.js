@@ -23,6 +23,9 @@ app.use("/developer" , DeveloperRouter);
 app.use("/client", clientRouter);
 app.use("/administrator" , AdminRouter);
 
+app.get("/" , (req,res)=>{
+    res.send("In Development Phase")
+})
 
 
 main().then(response =>{
