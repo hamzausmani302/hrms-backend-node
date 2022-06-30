@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
-
 const Project = require('../Model/project.schema.js');
+
 const addProject = async (project)=>{
     const result = await project.save();   
     return result;
@@ -12,7 +11,7 @@ const getAllProjects = async (filter)=>{
 
 const updateProject = async (id , newProject)=>{
     const updatedResult = await Project.findOneAndUpdate({_id : id} , newProject , {new:true});
-    return updatedResult
+    return updatedResult;
 }
 const removeProject = async (id)=>{
     const deletedResult = await Project.findOneAndDelete({_id : id});

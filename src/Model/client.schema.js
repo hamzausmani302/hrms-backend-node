@@ -5,14 +5,13 @@ const ClientSchema = mongoose.Schema({
     name : {
         type : String,
         maxLength : 50,
-        required: true
+        required: true,
     },
     
     organization : {
         type : String,
         maxLength : 30
     }
-
 })
 
 

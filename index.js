@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const ProjectRouter = require('./src/Routes/projectRouter')
 const DeveloperRouter = require('./src/Routes/developerRouter')
  
+const clientRouter = require('./src/Routes/ClientRouter');
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -14,6 +15,8 @@ app.use(helmet())       //for security headers
 app.use("/project",ProjectRouter);
 app.use("/developer" , DeveloperRouter)
 
+
+app.use("/client", clientRouter);
 
 
 
