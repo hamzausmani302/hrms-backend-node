@@ -11,8 +11,8 @@ app.use(express.urlencoded({extended : true}))
 
 app.use(helmet())
 
-app.use("/project",ProjectRouter);
-
+app.use("/project", ProjectRouter);
+app.use("/client", clientRouter);
 
 
 
