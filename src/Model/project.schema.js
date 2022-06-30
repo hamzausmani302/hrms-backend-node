@@ -1,7 +1,5 @@
 const mongoose = require("mongoose")
 
-
-
 const ProjectSchema = mongoose.Schema({
     name : {
         type : String, 
@@ -10,15 +8,18 @@ const ProjectSchema = mongoose.Schema({
         maxLength : 50,
         unique : true
     },
+
     description : {
         type : String,
         maxLength : 100
     },
+
     createdAt : {
         type : Date,
         required:true,
         default : Date.now()
     },
+
     startingDate : {
         type :Date ,
         validate: {
@@ -27,21 +28,29 @@ const ProjectSchema = mongoose.Schema({
             },
             message: 'Starting date should be smaller'
           },
+    },
+
+    dueDate : {
+        type : Date ,
+        validate: {
+            validator: function(v) {
+              return this.dueDate > this.startingDate;
+            },
+            message: 'Starting date must be smaller than dueDate'
+          },
         
 
     },
-    dueDate : {
-        type : Date ,
-        min : this.startingDate
 
-    },
     developersOnProject : {
         type : [mongoose.Types.ObjectId]
     },
+
     teamLead : {
         type : mongoose.Types.ObjectId,
        
     },
+
     status : {
         type : String,
         enum : {
@@ -49,20 +58,20 @@ const ProjectSchema = mongoose.Schema({
             message : "Unacceptable values provided"
         }
     },
+
     priority : {
         type : Number ,
         default : 1
     },
+
     clientId :{
         type : mongoose.Types.ObjectId,
-
     } ,
+
     progress : {
         type : Number,
         default : 0
     }
-
-
 })  
 
 const Project = mongoose.model("Project", ProjectSchema);

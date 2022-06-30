@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { update } = require("../Model/developer.schema.js");
+
 const Project = require('../Model/project.schema.js');
 const addProject = async (project)=>{
     const result = await project.save();   

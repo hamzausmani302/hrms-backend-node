@@ -7,6 +7,7 @@ const ClientSchema = mongoose.Schema({
         maxLength : 50,
         required: true
     },
+    
     organization : {
         type : String,
         maxLength : 30
