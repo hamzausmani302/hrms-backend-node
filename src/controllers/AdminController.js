@@ -23,6 +23,17 @@ const add_admin = async (req,res)=>{
 
 }
 
+const addDeveloper_Project = async (req, res)=>{ 
+    const devId = req.params.devId;
+
+    const addedDeveloper_project = await addDeveloperToproject(devId)
+    try{
+        res.json(addedDevloper_project);
+    }catch(err){
+        res.status(400).json({error : err});    //400 = project doesn't exist
+    }
+}
+
 const update_admin = async (req, res)=>{
     const id = req.params.id;
     const updates = req.body.updates;
@@ -56,8 +67,8 @@ const get_admin = async (req, res)=>{
     }
 }
 
-
 module.exports.addAdmin = add_admin;
 module.exports.updateAdmin = update_admin;
 module.exports.removeAdmin = remove_admin;
 module.exports.getAdmin = get_admin;
+module.exports.addDeveloper_Project = addDeveloper_Project;
