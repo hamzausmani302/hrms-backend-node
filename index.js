@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended : true}))
 app.use(helmet())       //for security headers 
 
 
-app.use("/project",ProjectRouter);
+app.use("/project", ProjectRouter);
 app.use("/developer" , DeveloperRouter)
 
 app.use("/client", clientRouter);
