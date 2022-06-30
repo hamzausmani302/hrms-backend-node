@@ -2,7 +2,7 @@ const express =require('express');
 const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
-const ProjectRouter = require('./src/Routes/projectRouter')
+const router = require('./src/Routes/index')
 
  
 
@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended : true}))
 
 app.use(helmet())
 
-app.use("/project",ProjectRouter);
+app.use("/",router);
 
 
 
