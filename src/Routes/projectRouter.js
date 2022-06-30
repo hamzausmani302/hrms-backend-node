@@ -1,49 +1,17 @@
 const express = require('express')
 const Project = require('../Model/project.schema');
 
-const {addProject , getAllProjects , updateProject , removeProject} = require('../Service/ProjectService.js');
+const {addProject , getAllProjects , updateProject , removeProject} = require('../controllers/ProjectController.js');
 
 const router = express.Router()
 
-router.get("/" , async (req,res)=>{
-    const filter = req.query;
-    const result = await getAllProjects(filter);
-    res.json(result);
-} )
+router.get("/" , getAllProjects);
 
-router.post("/" , async (req,res)=>{
-    
-    const {name ,description , startingDate , dueDate , status , progress  } = req.body;
-    const project = new Project({
-        name : name , 
-        description:description,
-        startingDate : startingDate , 
-        dueDate : dueDate ,
-        status : status,
-        progress : progress
-    });
+router.post("/" ,addProject)
 
-    try{
-        const result = await addProject(project)
-        res.send(result);
-    }catch(err){
-        res.send({error : err})
-    }
+router.put("/:id" ,updateProject)
 
-})
-
-router.put("/:id" ,async (req,res)=>{
-    const id = req.params.id;
-    const user = req.body.user;
-    const updatedUser = await updateProject(id , user);
-    res.json(updatedUser);
-})
-
-router.delete("/:id" , async (req,res)=>{
-    const id = req.params.id;
-    const result = await removeProject(id)
-    res.json(result);
-})
+router.delete("/:id" ,removeProject)
 
 
 module.exports = router;
