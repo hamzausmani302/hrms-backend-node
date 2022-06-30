@@ -17,9 +17,18 @@ const removeProject = async (id)=>{
     const deletedResult = await Project.findOneAndDelete({_id : id});
     return deletedResult;
 }
+const addDeveloperToProject = async(projId, id)=>{
+    const addedResult = await Project.findOneAndUpdate({_id : projId}, {$push: { developersOnProject: id }}, {new:true});
+    return addedResult;
+}
+const removeDev_Project = async(projId, id)=>{
+    const deletedResult = await Project.findOneAndUpdate({_id : projId}, {$pull: { developersOnProject: id }}, {new:true});
+    return deletedResult;
+}
 
-
+module.exports.removeDeveloper_Project = removeDev_Project;
+module.exports.addDeveloper_Project = addDeveloperToProject;
 module.exports.addProject = addProject;
 module.exports.getAllProjects = getAllProjects;
-module.exports.updateProject = updateProject
-module.exports.removeProject = removeProject
+module.exports.updateProject = updateProject;
+module.exports.removeProject = removeProject;
