@@ -3,7 +3,7 @@ const Admin = require('../Model/administrator.schema');
 
 const {addAdmin , getAllAdmin , updateAdmin , removeAdmin} = require('../Service/AdminServices');
 const add_admin = async (req,res)=>{
-     
+     console.log(req.body);
     const {name ,email , password , address , joiningDate , rights  } = req.body;
     const admin = new Admin({
         name : name , 
