@@ -3,8 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
 const ProjectRouter = require('./src/Routes/projectRouter')
-
- 
+const clientRouter = require('./src/Routes/ClientRouter');
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))

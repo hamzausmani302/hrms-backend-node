@@ -4,10 +4,10 @@ const Client = require('../Model/client.schema');
 const {addClient , getAllClients , updateClient , removeClient} = require('../Service/ClientService.js');
 const add_Client = async (req,res)=>{
      
-    const {name ,description , startingDate , dueDate , status , progress  } = req.body;
+    const {name, organization } = req.body;
     const client = new Client({
-        name : "Thomas Jones",
-        organization : "NVIDIA"
+        name : name,
+        organization : organization
     });
 
     try{
@@ -34,9 +34,8 @@ const update_Client = async (req, res)=>{
 const remove_Client = async (req, res)=>{
     const id = req.params.id;
     try{
-    const result = await removeClient(id)
-    
-    res.json(result);
+        const result = await removeClient(id);
+        res.json(result);
     }catch(err){
         res.status(404).json({error : err})
     }
