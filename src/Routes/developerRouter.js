@@ -1,8 +1,11 @@
 const express = require('express')
 
+
+const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper} = require('../controllers/DeveloperController.js');
+
 const router = express.Router()
 
-router.get("/" , getAllDeveloper);
+router.get("/" , getAllDevelopers);
 
 router.post("/" ,addDeveloper)
 

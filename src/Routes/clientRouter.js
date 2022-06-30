@@ -1,14 +1,16 @@
 const express = require('express')
 
+const {addClient, getAllClients, updateClient, removeClient} = require('../controllers/ClientController.js');
+
 const router = express.Router()
 
-router.get("/" , getAllClient);
+router.get("/", getAllClients);
 
-router.post("/" ,addClient)
+router.post("/", addClient)
 
-router.put("/:id" ,updateClient)
+router.put("/:id", updateClient)
 
-router.delete("/:id" ,removeClient)
+router.delete("/:id", removeClient)
 
 
 module.exports = router;
