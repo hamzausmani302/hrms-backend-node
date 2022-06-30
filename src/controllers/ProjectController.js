@@ -1,7 +1,7 @@
 
 const Project = require('../Model/project.schema');
 
-const {addProject , getAllProjects , updateProject , removeProject} = require('../Service/ProjectService.js');
+const {addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
 const add_project = async (req,res)=>{
      
     const {name ,description , startingDate , dueDate , status , progress  } = req.body;
@@ -56,7 +56,30 @@ const getProjects = async (req, res)=>{
     }
 }
 
+const addDeveloperToProject = async (req, res)=>{
+    const projid = req.params.id;
+    const devId = req.body.developerId;
+    try{
+        const addedResult = await addDeveloper_Project(projid, devId);
+        res.json(addedResult);
+    }catch(err){
+        res.status(404).json({error : err});            //no such ID exists
+    }
+}
 
+const removeDeveloperFromProject = async (req, res)=>{
+    const projid = req.params.id;
+    const devId = req.body.developerId;
+    try{
+        const removedResult = await removeDeveloper_Project(projid, devId);
+        res.json(removedResult);
+    }catch(err){
+        res.status(404).json({error : err});            //no such ID exists
+    }
+}
+
+module.exports.removeDeveloperFromProject = removeDeveloperFromProject;
+module.exports.addDeveloperToProject = addDeveloperToProject;
 module.exports.addProject = add_project;
 module.exports.getAllProjects = getProjects;
 module.exports.removeProject = remove_project;

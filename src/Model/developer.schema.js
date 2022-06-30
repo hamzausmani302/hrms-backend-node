@@ -40,7 +40,7 @@ const DeveloperSchema = mongoose.Schema({
    },
    password : {
       type:String , 
-      maxLength:50,
+      maxLength:200,
       minLength : 6,
       required : true
    }

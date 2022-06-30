@@ -3,7 +3,7 @@ const Admin = require('../Model/administrator.schema');
 
 const {addAdmin , getAllAdmin , updateAdmin , removeAdmin} = require('../Service/AdminServices');
 const add_admin = async (req,res)=>{
-     
+     console.log(req.body);
     const {name ,email , password , address , joiningDate , rights  } = req.body;
     const admin = new Admin({
         name : name , 
@@ -21,6 +21,17 @@ const add_admin = async (req,res)=>{
         res.status(400).send({error : err})
     }
 
+}
+
+const addDeveloper_Project = async (req, res)=>{ 
+    const devId = req.params.devId;
+
+    const addedDeveloper_project = await addDeveloperToproject(devId)
+    try{
+        res.json(addedDevloper_project);
+    }catch(err){
+        res.status(400).json({error : err});    //400 = project doesn't exist
+    }
 }
 
 const update_admin = async (req, res)=>{
@@ -56,8 +67,8 @@ const get_admin = async (req, res)=>{
     }
 }
 
-
 module.exports.addAdmin = add_admin;
 module.exports.updateAdmin = update_admin;
 module.exports.removeAdmin = remove_admin;
 module.exports.getAdmin = get_admin;
+module.exports.addDeveloper_Project = addDeveloper_Project;
