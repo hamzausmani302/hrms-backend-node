@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+const validator = require('email-validator');
 const AdministratorSchema = mongoose.Schema({
     name : {
         type : String ,
