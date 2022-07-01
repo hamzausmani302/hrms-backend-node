@@ -2,7 +2,7 @@ const express = require('express')
 const Admin = require('../Model/administrator.schema');
 
 const {addAdmin , getAllAdmin , updateAdmin , removeAdmin} = require('../Service/AdminServices');
-const add_admin = async (req,res)=>{
+const addAdminController = async (req,res)=>{
      console.log(req.body);
     const {name ,email , password , address , joiningDate , rights  } = req.body;
     const admin = new Admin({
@@ -23,8 +23,8 @@ const add_admin = async (req,res)=>{
 
 }
 
-const addDeveloper_Project = async (req, res)=>{ 
-    const devId = req.params.devId;
+const addDeveloper_ProjectController = async (req, res)=>{ 
+    const {devId} = req.params;
 
     const addedDeveloper_project = await addDeveloperToproject(devId)
     try{
@@ -34,7 +34,7 @@ const addDeveloper_Project = async (req, res)=>{
     }
 }
 
-const update_admin = async (req, res)=>{
+const updateAdminController = async (req, res)=>{
     const id = req.params.id;
     const updates = req.body.updates;
     try{
@@ -46,7 +46,7 @@ const update_admin = async (req, res)=>{
     
 }
 
-const remove_admin = async (req, res)=>{
+const removeAdminController = async (req, res)=>{
     const id = req.params.id;
     try{
     const result = await removeAdmin(id)
@@ -57,7 +57,7 @@ const remove_admin = async (req, res)=>{
     }
 }
 
-const get_admin = async (req, res)=>{
+const getAdminController = async (req, res)=>{
     const filter = req.query;
     try{
         const result = await getAllAdmin(filter);
@@ -67,8 +67,8 @@ const get_admin = async (req, res)=>{
     }
 }
 
-module.exports.addAdmin = add_admin;
-module.exports.updateAdmin = update_admin;
-module.exports.removeAdmin = remove_admin;
-module.exports.getAdmin = get_admin;
-module.exports.addDeveloper_Project = addDeveloper_Project;
+module.exports.addAdmin = addAdminController;
+module.exports.updateAdmin = updateAdminController;
+module.exports.removeAdmin = removeAdminController;
+module.exports.getAdmin = getAdminController;
+module.exports.addDeveloper_Project = addDeveloper_ProjectController;

@@ -43,13 +43,16 @@ const remove_Client = async (req, res)=>{
 
 const getClients = async (req, res)=>{
     const filter = req.query;
-    try{
+   
         const result = await getAllClients(filter);
         res.json(result);
-    }catch(err){
         res.status(404).json({error : err});
-    }
 }
+
+
+// const catchAsync= (fn) => {
+//     return fn()
+// }
 
 
 module.exports.addClient = add_Client;

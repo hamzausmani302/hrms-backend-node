@@ -3,13 +3,8 @@ const {addAdmin , updateAdmin , removeAdmin , getAdmin} = require('../controller
 const {encrypt} = require('../Middlewares/EncryptPassword');
 const router = express.Router()
 
-router.get("/" , getAdmin);
-
-router.post("/",encrypt ,addAdmin)
-
-router.put("/:id" ,updateAdmin)
-
-router.delete("/:id" ,removeAdmin)
+router.get("/" , getAdmin).post("/",encrypt ,addAdmin)
+router.put("/:id" ,updateAdmin).delete("/:id" ,removeAdmin)
 
 
 module.exports = router;
