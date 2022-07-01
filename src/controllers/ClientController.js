@@ -2,7 +2,7 @@ const express = require('express')
 const Client = require('../Model/client.schema');
 
 const {addClient , getAllClients , updateClient , removeClient} = require('../Service/ClientService.js');
-const add_Client = async (req,res)=>{
+const addClientController = async (req,res)=>{
      
     const {name, organization } = req.body;
     const client = new Client({
@@ -19,7 +19,7 @@ const add_Client = async (req,res)=>{
 
 }
 
-const update_Client = async (req, res)=>{
+const updateClientController = async (req, res)=>{
     const id = req.params.id;
     const updates = req.body.updates;
     try{
@@ -31,7 +31,7 @@ const update_Client = async (req, res)=>{
     
 }
 
-const remove_Client = async (req, res)=>{
+const removeClientController = async (req, res)=>{
     const id = req.params.id;
     try{
         const result = await removeClient(id);
@@ -41,7 +41,7 @@ const remove_Client = async (req, res)=>{
     }
 }
 
-const getClients = async (req, res)=>{
+const getClientsController = async (req, res)=>{
     const filter = req.query;
    
         const result = await getAllClients(filter);
@@ -55,7 +55,7 @@ const getClients = async (req, res)=>{
 // }
 
 
-module.exports.addClient = add_Client;
-module.exports.getAllClients = getClients;
-module.exports.removeClient = remove_Client;
-module.exports.updateClient = update_Client;
+module.exports.addClient = addClientController;
+module.exports.getAllClients = getClientsController;
+module.exports.removeClient = removeClientController;
+module.exports.updateClient = updateClientController;
