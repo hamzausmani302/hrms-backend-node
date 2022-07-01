@@ -44,7 +44,9 @@ const DeveloperSchema = mongoose.Schema({
       minLength : 6,
       required : true
    }
-})  
+},
+
+)  
 
 const Developer = mongoose.model("Developer", DeveloperSchema);
 

@@ -73,7 +73,10 @@ const ProjectSchema = mongoose.Schema({
         default : 0
     }
 })  
-
+ProjectSchema.virtual('NumberOfDevelopers').get(function(){
+    this.totalDevelopers =  this.developersOnProject.length;
+    return this.totalDevelopers
+})
 const Project = mongoose.model("Project", ProjectSchema);
 
 

@@ -1,6 +1,6 @@
 const express = require('express')
 
-const {addProject , getAllProjects , updateProject , removeProject, addDeveloperToProject, removeDeveloperFromProject} = require('../controllers/ProjectController.js');
+const {getAllProjectInfo , addProject , getAllProjects , updateProject , removeProject, addDeveloperToProject, removeDeveloperFromProject} = require('../controllers/ProjectController.js');
 
 const router = express.Router()
 
@@ -16,4 +16,6 @@ router.put("/addDev/:id" , addDeveloperToProject);
 
 router.put("/removeDev/:id" , removeDeveloperFromProject);
 
+
+router.get("/all" ,getAllProjectInfo);
 module.exports = router;
