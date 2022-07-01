@@ -20,7 +20,7 @@ const addClientController = async (req,res)=>{
 }
 
 const updateClientController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     const updates = req.body.updates;
     try{
         const updatedUser = await updateClient(id , updates);
@@ -32,7 +32,7 @@ const updateClientController = async (req, res)=>{
 }
 
 const removeClientController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     try{
         const result = await removeClient(id);
         res.json(result);

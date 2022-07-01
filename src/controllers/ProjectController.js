@@ -1,6 +1,6 @@
 
 const Project = require('../Model/project.schema');
-const {addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
+const {getProjectWithDevelopers,addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
 
 const addProjectController = async (req,res)=>{
      
@@ -24,8 +24,8 @@ const addProjectController = async (req,res)=>{
 }
 
 const updateProjectController = async (req, res)=>{
-    const id = req.params.id;
-    const updates = req.body.updates;
+    const {id} = req.params;
+    const {updates} = req.body;
     try{
         const updatedUser = await updateProject(id , updates);
         res.json(updatedUser);    
@@ -36,11 +36,10 @@ const updateProjectController = async (req, res)=>{
 }
 
 const removeProjectController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     try{
-    const result = await removeProject(id)
-    
-    res.json(result);
+        const result = await removeProject(id)
+        res.json(result);
     }catch(err){
         res.status(404).json({error : err})
     }
@@ -57,8 +56,8 @@ const getProjectsController = async (req, res)=>{
 }
 
 const addDeveloperToProject = async (req, res)=>{
-    const projid = req.params.id;
-    const devId = req.body.developerId;
+    const {id:projid} = req.params;
+    const {developerId:devId} = req.body;
     try{
         const addedResult = await addDeveloper_Project(projid, devId);
         res.json(addedResult);
@@ -68,11 +67,20 @@ const addDeveloperToProject = async (req, res)=>{
 }
 
 const removeDeveloperFromProject = async (req, res)=>{
-    const projid = req.params.id;
-    const devId = req.body.developerId;
+    const {id:projid} = req.params;
+    const {developerId:devId} = req.body;
     try{
         const removedResult = await removeDeveloper_Project(projid, devId);
         res.json(removedResult);
+    }catch(err){
+        res.status(404).json({error : err});            //no such ID exists
+    }
+}
+
+const getAllProjectInfo = async (req,res)=>{
+    try{
+        const allProjects = await getProjectWithDevelopers([])
+        res.json(allProjects);
     }catch(err){
         res.status(404).json({error : err});            //no such ID exists
     }
@@ -84,3 +92,4 @@ module.exports.addProject = addProjectController;
 module.exports.getAllProjects = getProjectsController;
 module.exports.removeProject = removeProjectController;
 module.exports.updateProject = updateProjectController;
+module.exports.getAllProjectInfo = getAllProjectInfo;

@@ -1,4 +1,4 @@
-const express = require('express')
+
 const Admin = require('../Model/administrator.schema');
 
 const {addAdmin , getAllAdmin , updateAdmin , removeAdmin} = require('../Service/AdminServices');
@@ -9,7 +9,7 @@ const addAdminController = async (req,res)=>{
         name : name , 
         email:email,
         password : password,
-        joiningDate : joiningDate , 
+        joiningDate : joiningDate, 
         address : address ,
         rights  : rights,
     });
@@ -23,19 +23,19 @@ const addAdminController = async (req,res)=>{
 
 }
 
-const addDeveloper_ProjectController = async (req, res)=>{ 
-    const {devId} = req.params;
+// const addDeveloper_ProjectController = async (req, res)=>{ 
+//     const {devId} = req.params;
 
-    const addedDeveloper_project = await addDeveloperToproject(devId)
-    try{
-        res.json(addedDevloper_project);
-    }catch(err){
-        res.status(400).json({error : err});    //400 = project doesn't exist
-    }
-}
+//     const addedDeveloper_project = await addDeveloperToproject(devId)
+//     try{
+//         res.json(addedDevloper_project);
+//     }catch(err){
+//         res.status(400).json({error : err});    //400 = project doesn't exist
+//     }
+// }
 
 const updateAdminController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     const updates = req.body.updates;
     try{
         const updatedAdmin = await updateAdmin(id , updates);
@@ -47,7 +47,7 @@ const updateAdminController = async (req, res)=>{
 }
 
 const removeAdminController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     try{
     const result = await removeAdmin(id)
     
@@ -71,4 +71,4 @@ module.exports.addAdmin = addAdminController;
 module.exports.updateAdmin = updateAdminController;
 module.exports.removeAdmin = removeAdminController;
 module.exports.getAdmin = getAdminController;
-module.exports.addDeveloper_Project = addDeveloper_ProjectController;
+// module.exports.addDeveloper_Project = addDeveloper_ProjectController;

@@ -7,7 +7,7 @@ const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper} = re
 const {DeveloperInfo} = require('../DTO/DeveloperInfo');
 
 const addDeveloperController = async (req,res)=>{
-    const {name , address ,designation ,  joiningDate ,email, password   } = req.body;
+    const {name , address ,designation ,  joiningDate ,email, password} = req.body;
     const developer = new Developer({
        name : name,
        address : address,
@@ -25,7 +25,7 @@ const addDeveloperController = async (req,res)=>{
 }
 
 const updateDeveloperController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     const updates = req.body.updates;
     try{
         const updatedUser = await updateDeveloper(id , updates);
@@ -37,7 +37,7 @@ const updateDeveloperController = async (req, res)=>{
 }
 
 const removeDeveloperController = async (req, res)=>{
-    const id = req.params.id;
+    const {id} = req.params;
     try{
     const result = await removeDeveloper(id)
     
@@ -63,7 +63,7 @@ const loginAsDeveloper = async (req,res)=>{
         
 
         const filter=  {
-            email : email ,
+            email : email,
         }
         const allDevelopers = await getAllDevelopers(filter)
         
