@@ -2,7 +2,7 @@
 const Developer = require('../Model/developer.schema');
 const {AUTHENTICATE_HASH , HASH_PASSWORD} = require('../Utils/Encryption');
 const {JWT_SIGN , JWT_VERIFY} =  require('../Utils/Authentication');
-const path = rqeuire("path");
+const path = require("path");
 const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper} = require(path.resolve(__dirname , "../Service/developerService.js"));
 const {DeveloperInfo} = require('../DTO/DeveloperInfo');
 
