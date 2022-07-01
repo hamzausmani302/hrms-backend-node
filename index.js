@@ -11,7 +11,7 @@ dotenv.config()
 const ProjectRouter = require('./src/Routes/projectRouter')
 const DeveloperRouter = require('./src/Routes/developerRouter')
 const AdminRouter = require('./src/Routes/adminRouter');
-const clientRouter = require('./src/Routes/ClientRouter');
+const clientRouter = require('./src/Routes/clientRouter');
 
 
 app.use(express.json())
