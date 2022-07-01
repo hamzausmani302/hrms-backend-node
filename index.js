@@ -42,8 +42,7 @@ main().then(response =>{
     console.log(err)
 });
 async function main() {
-  await mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.b1kww.mongodb.net/test
-  `);
+  await mongoose.connect("mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority"  );
 }
 // mongodb://localhost:27017/test
 app.listen(process.env.PORT || 3000 , ()=>{
