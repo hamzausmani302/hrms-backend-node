@@ -33,7 +33,9 @@ app.get("/" , (req,res)=>{
     res.send("In Development Phase")
 })
 
-
+app.get("/favicon.ico"  , (req,res)=>{
+    res.send("data")
+})
 
 main().then(response =>{
     console.log("connected to database")
