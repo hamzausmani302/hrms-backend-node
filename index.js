@@ -33,9 +33,6 @@ app.get("/" , (req,res)=>{
     res.send("In Development Phase")
 })
 
-app.get("/" , (req,res)=>{
-    res.send("In Development Phase")
-})
 
 
 main().then(response =>{
