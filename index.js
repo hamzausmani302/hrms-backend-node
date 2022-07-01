@@ -3,7 +3,9 @@ const cors = require('cors')
 const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
+const dotenv = require("dotenv")
 
+dotenv.config()
 
 
 const ProjectRouter = require('./src/Routes/projectRouter')
@@ -46,6 +48,6 @@ main().then(response =>{
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/test');
 }
-app.listen(3000 , ()=>{
+app.listen(process.env.PORT , ()=>{
     console.log("server started");
 })
