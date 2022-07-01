@@ -41,10 +41,11 @@ main().then(response =>{
 }).catch(err => {
     console.log(err)
 });
-// mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.b1kww.mongodb.net/test
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/test");
+  await mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0.b1kww.mongodb.net/test
+  `);
 }
+// mongodb://localhost:27017/test
 app.listen(process.env.PORT || 3000 , ()=>{
     console.log("server started");
 })
