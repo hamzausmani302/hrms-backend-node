@@ -1,8 +1,8 @@
 
 const Project = require('../Model/project.schema');
-
 const {addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
-const add_project = async (req,res)=>{
+
+const addProjectController = async (req,res)=>{
      
     const {name ,description , startingDate , dueDate , status , progress  } = req.body;
     const project = new Project({
@@ -23,7 +23,7 @@ const add_project = async (req,res)=>{
 
 }
 
-const update_project = async (req, res)=>{
+const updateProjectController = async (req, res)=>{
     const id = req.params.id;
     const updates = req.body.updates;
     try{
@@ -35,7 +35,7 @@ const update_project = async (req, res)=>{
     
 }
 
-const remove_project = async (req, res)=>{
+const removeProjectController = async (req, res)=>{
     const id = req.params.id;
     try{
     const result = await removeProject(id)
@@ -46,7 +46,7 @@ const remove_project = async (req, res)=>{
     }
 }
 
-const getProjects = async (req, res)=>{
+const getProjectsController = async (req, res)=>{
     const filter = req.query;
     try{
         const result = await getAllProjects(filter);
@@ -80,7 +80,7 @@ const removeDeveloperFromProject = async (req, res)=>{
 
 module.exports.removeDeveloperFromProject = removeDeveloperFromProject;
 module.exports.addDeveloperToProject = addDeveloperToProject;
-module.exports.addProject = add_project;
-module.exports.getAllProjects = getProjects;
-module.exports.removeProject = remove_project;
-module.exports.updateProject = update_project;
+module.exports.addProject = addProjectController;
+module.exports.getAllProjects = getProjectsController;
+module.exports.removeProject = removeProjectController;
+module.exports.updateProject = updateProjectController;

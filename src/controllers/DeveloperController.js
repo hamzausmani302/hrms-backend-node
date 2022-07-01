@@ -6,10 +6,7 @@ const path = require("path");
 const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper} = require(path.resolve(__dirname , "../Service/developerService.js"));
 const {DeveloperInfo} = require('../DTO/DeveloperInfo');
 
-
-const add_Developer = async (req,res)=>{
-
-    
+const addDeveloperController = async (req,res)=>{
     const {name , address ,designation ,  joiningDate ,email, password   } = req.body;
     const developer = new Developer({
        name : name,
@@ -18,19 +15,16 @@ const add_Developer = async (req,res)=>{
        joiningDate : joiningDate,
        email : email,
        password : password
-
     });
-
     try{
         const result = await addDeveloper(developer)
         res.send(result)
     }catch(err){
         res.status(400).send({error : err})
     }
-
 }
 
-const update_Developer = async (req, res)=>{
+const updateDeveloperController = async (req, res)=>{
     const id = req.params.id;
     const updates = req.body.updates;
     try{
@@ -42,7 +36,7 @@ const update_Developer = async (req, res)=>{
     
 }
 
-const remove_Developer = async (req, res)=>{
+const removeDeveloperController = async (req, res)=>{
     const id = req.params.id;
     try{
     const result = await removeDeveloper(id)
@@ -53,7 +47,7 @@ const remove_Developer = async (req, res)=>{
     }
 }
 
-const getDevelopers = async (req, res)=>{
+const getDevelopersController = async (req, res)=>{
     const filter = req.query;
     try{
         const result = await getAllDevelopers(filter);
@@ -104,8 +98,8 @@ const loginAsDeveloper = async (req,res)=>{
     }
 }
 
-module.exports.addDeveloper = add_Developer;
-module.exports.getAllDevelopers = getDevelopers;
-module.exports.removeDeveloper = remove_Developer;
-module.exports.updateDeveloper = update_Developer;
+module.exports.addDeveloper = addDeveloperController;
+module.exports.getAllDevelopers = getDevelopersController;
+module.exports.removeDeveloper = removeDeveloperController;
+module.exports.updateDeveloper = updateDeveloperController;
 module.exports.loginAsDeveloper = loginAsDeveloper;
