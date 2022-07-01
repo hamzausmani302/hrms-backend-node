@@ -43,10 +43,13 @@ const removeClientController = async (req, res)=>{
 
 const getClientsController = async (req, res)=>{
     const filter = req.query;
-   
+    
+    try{
         const result = await getAllClients(filter);
         res.json(result);
+    }catch(err){
         res.status(404).json({error : err});
+    }
 }
 
 
