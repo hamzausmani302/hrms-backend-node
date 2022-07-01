@@ -1,7 +1,10 @@
 
 
-const {HASH_PASSWORD} = require('../src/Utils/Encryption');
-test('Checking hashing' , ()=>{
-    const hash = HASH_PASSWORD("password" , 10);
-    console.log(hash);
+const {passGenerator} = require('../src/Utils/PasswordGenerator');
+test('Checking passwords' , ()=>{
+    console.log(passGenerator());
+})
+
+test('Checking passwords2' , ()=>{
+    console.log(passGenerator());
 })
