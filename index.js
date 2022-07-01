@@ -48,6 +48,6 @@ main().then(response =>{
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/test');
 }
-app.listen(process.env.PORT , ()=>{
+app.listen(process.env.PORT || 3000 , ()=>{
     console.log("server started");
 })
