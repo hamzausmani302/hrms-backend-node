@@ -18,9 +18,14 @@ const removeDeveloper = async (id)=>{
     const deletedResult = await Developer.findOneAndDelete({_id : id});
     return deletedResult;
 }
-
+const addSkills = async(id, updates) =>{
+    const {skills} = updates;
+    const addedResult = await Developer.findOneAndUpdate({_id : id},  {$push: { skills: skills }}, {new:true});
+    return addedResult;
+}
 
 module.exports.addDeveloper = addDeveloper;
 module.exports.getAllDevelopers = getAllDevelopers;
 module.exports.updateDeveloper = updateDeveloper
-module.exports.removeDeveloper = removeDeveloper
+module.exports.removeDeveloper = removeDeveloper;
+module.exports.addSkills = addSkills;
