@@ -3,18 +3,19 @@ const Developer = require('../Model/developer.schema');
 const {AUTHENTICATE_HASH , HASH_PASSWORD} = require('../Utils/Encryption');
 const {JWT_SIGN , JWT_VERIFY} =  require('../Utils/Authentication');
 const path = require("path");
-const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper} = require(path.resolve(__dirname , "../Service/developerService.js"));
+const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper, addSkills} = require(path.resolve(__dirname , "../Service/developerService.js"));
 const {DeveloperInfo} = require('../DTO/DeveloperInfo');
 
 const addDeveloperController = async (req,res)=>{
-    const {name , address ,designation ,  joiningDate ,email, password} = req.body;
+    const {name , address ,designation ,  joiningDate ,email, password, skills} = req.body;
     const developer = new Developer({
        name : name,
        address : address,
        designation : designation,
        joiningDate : joiningDate,
        email : email,
-       password : password
+       password : password,
+       skills: [skills]                         //initially only one skill should be added!
     });
     try{
         const result = await addDeveloper(developer)
@@ -36,12 +37,23 @@ const updateDeveloperController = async (req, res)=>{
     
 }
 
+const updateSkillsController = async (req, res) =>{
+    const {id} = req.params;
+    const {updates} = req.body;
+
+    try{
+        const updatedRes = await addSkills(id, updates);
+        res.json(updatedRes)
+    }catch(err){
+        res.status(404).json({error : err})
+    }
+}
+
 const removeDeveloperController = async (req, res)=>{
     const {id} = req.params;
     try{
-    const result = await removeDeveloper(id)
-    
-    res.json(result);
+        const result = await removeDeveloper(id)
+        res.json(result);
     }catch(err){
         res.status(404).json({error : err})
     }
@@ -104,3 +116,4 @@ module.exports.getAllDevelopers = getDevelopersController;
 module.exports.removeDeveloper = removeDeveloperController;
 module.exports.updateDeveloper = updateDeveloperController;
 module.exports.loginAsDeveloper = loginAsDeveloper;
+module.exports.updateSkills = updateSkillsController;

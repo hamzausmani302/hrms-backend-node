@@ -43,6 +43,12 @@ const DeveloperSchema = mongoose.Schema({
       maxLength:200,
       minLength : 6,
       required : true
+   },
+
+   skills : {
+      type : [String],
+      minItems: 1,
+      maxItems: 50
    }
 },
 
