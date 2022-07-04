@@ -3,6 +3,7 @@ const express = require('express')
 
 const {addDeveloper , getAllDevelopers , updateDeveloper , removeDeveloper , loginAsDeveloper} = require('../controllers/DeveloperController.js');
 const {encrypt} = require('../Middlewares/EncryptPassword');
+const {use} = require('../Middlewares/CatchError');
 const router = express.Router()
 
 router.get("/" , getAllDevelopers);

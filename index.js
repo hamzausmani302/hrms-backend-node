@@ -1,9 +1,11 @@
 const express =require('express');
 const cors = require('cors')
+const cookieParser = require("cookie-parser")
 const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
 const dotenv = require("dotenv")
+
 const {ErrorHandler} = require("./src/Utils/ErrorHandler");
 dotenv.config()
 
@@ -16,6 +18,7 @@ const clientRouter = require('./src/Routes/clientRouter');
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
+app.use(cookieParser())
 app.use(cors())
 app.use(helmet())       //for security headers 
 
@@ -47,6 +50,7 @@ main().then(response =>{
     console.log("connected to database")
 }).catch(err => {
     console.log(err)
+    
 });
 async function main() {
   await mongoose.connect("mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority");

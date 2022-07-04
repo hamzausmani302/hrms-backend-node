@@ -36,6 +36,11 @@ const updateProjectController = async (req, res)=>{
         error.statusCode = 202
         throw error;
     });
+    if(!updatedUser){
+        const error =  new Error("Resource not Found")
+        error.statusCode = 404;
+        throw error;
+    }
         res.status(200).json(updatedUser);    
 }
 

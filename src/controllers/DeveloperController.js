@@ -78,16 +78,17 @@ const loginAsDeveloper = async (req,res)=>{
                     password : _dev.password
                 })
                 _dev["token"] = token;
-            
-                return res.json(DeveloperInfo(_dev));
+                res.cookie("AUTH_TOKEN" , token  , { maxAge: 900000})
+                return res.status(200).json(DeveloperInfo(_dev));
 
             }else{
                 return res.status(403).json({error : "Incorrect username or password"});
             
+                
             }
 
         }
-        return res.status(404).json({error  : "No record found"});
+        return res.status(403).json({error  : "No record found"});
         
         
 
