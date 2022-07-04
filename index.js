@@ -4,7 +4,7 @@ const app = express()
 const mongoose = require('mongoose')
 const helmet = require("helmet");
 const dotenv = require("dotenv")
-
+const {ErrorHandler} = require("./src/Utils/ErrorHandler");
 dotenv.config()
 
 
@@ -31,6 +31,13 @@ app.use("/developer" , DeveloperRouter);
 app.use("/client", clientRouter);
 app.use("/administrator" , AdminRouter);
 
+app.use((err,req,res,next)=>{
+
+    const error = ErrorHandler(err);
+    res.status(error.status).send({message : error.message} );
+    
+})
+
 app.get("/" , (req,res)=>{
     res.send("In Development Phase")
 })
@@ -42,9 +49,10 @@ main().then(response =>{
     console.log(err)
 });
 async function main() {
-  await mongoose.connect("mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority"  );
+  await mongoose.connect("mongodb://localhost:27017/test");
 }
 // mongodb://localhost:27017/test
+//mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority
 app.listen(process.env.PORT || 3000 , ()=>{
     console.log("server started");
 })

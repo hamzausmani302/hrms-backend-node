@@ -1,4 +1,5 @@
 
+const { MongooseError } = require('mongoose');
 const Project = require('../Model/project.schema');
 const {getProjectWithDevelopers,addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
 
@@ -14,76 +15,95 @@ const addProjectController = async (req,res)=>{
         progress : progress
     });
 
-    try{
-        const result = await addProject(project)
-        res.send(result);
-    }catch(err){
-        res.status(400).send({error : err})
-    }
+  
+    const result = await addProject(project).catch(err=>{
+        const error = new Error(err.message)
+        error.statusCode = 202;
+        throw error;
+    })
+    
+    res.status(201).send(result);
+    
+    
 
 }
 
 const updateProjectController = async (req, res)=>{
     const {id} = req.params;
     const {updates} = req.body;
-    try{
-        const updatedUser = await updateProject(id , updates);
-        res.json(updatedUser);    
-    }catch(err){
-        res.status(400).json({error : err})
-    }
-    
+    const updatedUser = await updateProject(id , updates).catch(err=>{
+       const error = new Error(err.message);
+        error.statusCode = 202
+        throw error;
+    });
+        res.status(200).json(updatedUser);    
 }
 
 const removeProjectController = async (req, res)=>{
     const {id} = req.params;
-    try{
-        const result = await removeProject(id)
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err})
+   
+        
+    const result = await removeProject(id).catch(err=>{
+        const error =  new Error("Invalid Identifier")
+        error.statusCode = 400;
+        throw error;
+    })
+    if(!result){
+        const error =  new Error("Resource not Found")
+        error.statusCode = 404;
+        throw error;
     }
+    res.status(200).json(result);
+    
+      
+    
 }
 
 const getProjectsController = async (req, res)=>{
     const filter = req.query;
-    try{
-        const result = await getAllProjects(filter);
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err});
-    }
+   
+        const result = await getAllProjects(filter).catch(err=>{
+            const error = new Error(err.message);
+            error.statusCode = 404
+            throw error;
+        });
+        res.status(200).json(result);
+    
 }
 
 const addDeveloperToProject = async (req, res)=>{
     const {id:projid} = req.params;
     const {developerId:devId} = req.body;
-    try{
-        const addedResult = await addDeveloper_Project(projid, devId);
-        res.json(addedResult);
-    }catch(err){
-        res.status(404).json({error : err});            //no such ID exists
-    }
+   
+    const addedResult = await addDeveloper_Project(projid, devId).catch(err=>{
+        const error = new Error(err.message);
+        error.statusCode = 202
+        throw error;
+    });
+    res.status(200).json(addedResult);
 }
 
 const removeDeveloperFromProject = async (req, res)=>{
     const {id:projid} = req.params;
     const {developerId:devId} = req.body;
-    try{
-        const removedResult = await removeDeveloper_Project(projid, devId);
-        res.json(removedResult);
-    }catch(err){
-        res.status(404).json({error : err});            //no such ID exists
-    }
+    
+    const removedResult = await removeDeveloper_Project(projid, devId).catch(err=>{
+        const error = new Error(err.message);
+        error.statusCode = 404
+        throw error;
+    });
+    res.status(200).json(removedResult);
+    
 }
 
 const getAllProjectInfo = async (req,res)=>{
-    try{
-        const allProjects = await getProjectWithDevelopers([])
-        res.json(allProjects);
-    }catch(err){
-        res.status(404).json({error : err});            //no such ID exists
-    }
+        const allProjects = await getProjectWithDevelopers([]).catch(err=>{
+            const error = new Error(err.message);
+            error.statusCode = 404
+            throw error;
+        })
+        res.status(200).json(allProjects);
+    
 }
 
 module.exports.removeDeveloperFromProject = removeDeveloperFromProject;

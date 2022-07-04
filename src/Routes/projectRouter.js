@@ -4,18 +4,23 @@ const {getAllProjectInfo , addProject , getAllProjects , updateProject , removeP
 
 const router = express.Router()
 
-router.get("/" , getAllProjects);
-
-router.post("/" ,addProject)
-
-router.put("/:id" ,updateProject)
-
-router.delete("/:id" ,removeProject)
-
-router.put("/addDev/:id" , addDeveloperToProject);
-
-router.put("/removeDev/:id" , removeDeveloperFromProject);
+const use = (fn)=>(req  ,res, next)=>{
+    Promise.resolve(fn(req,res,next)).catch(next);
+}
 
 
+router.get("/" , use(getAllProjects));
+
+router.post("/" ,use(addProject))
+
+router.put("/:id" ,use(updateProject))
+
+router.delete("/:id" ,use(removeProject))
+
+router.put("/addDev/:id" , use(addDeveloperToProject));
+
+router.put("/removeDev/:id" , use(removeDeveloperFromProject));
+
+// router.get("/testError" , use((req,res)=>{throw new Error("error1 ")}))
 router.get("/all" ,getAllProjectInfo);
 module.exports = router;
