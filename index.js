@@ -49,7 +49,7 @@ main().then(response =>{
     console.log(err)
 });
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/test");
+  await mongoose.connect("mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority");
 }
 // mongodb://localhost:27017/test
 //mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority
