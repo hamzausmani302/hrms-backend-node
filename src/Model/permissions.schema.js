@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 
-
 const PermissionSchema = mongoose.Schema({
-    
-    createAdmin : {type : Boolean , default : false },
-    viewAdmin : {type : Boolean , default : false },
-    updateAdmin : {type : Boolean , default : false },
-    deleteAdmin : {type : Boolean , default : false },
-    
     createProject : {type : Boolean , default : false },
     readProject : {type : Boolean , default : false },
     addProject : {type : Boolean , default : false },
@@ -32,11 +25,7 @@ const PermissionSchema = mongoose.Schema({
     viewClient : {type : Boolean , default : false },
     addClient : {type : Boolean , default : false },
     updateClient : {type : Boolean , default : false },
-
-
-
 })
-
 
 const Permission = mongoose.model("Permission" , PermissionSchema)
 module.exports = Permission;
