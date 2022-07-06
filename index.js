@@ -11,7 +11,7 @@ dotenv.config()
 
 
 const ProjectRouter = require('./src/Routes/projectRouter')
-const DeveloperRouter = require('./src/Routes/developerRouter')
+const ResourceRouter = require('./src/Routes/resourceRouter')
 const clientRouter = require('./src/Routes/clientRouter');
 
 
@@ -24,12 +24,7 @@ app.use(helmet())       //for security headers
 
 
 app.use("/project",ProjectRouter);
-app.use("/developer" , DeveloperRouter);
-
-
-
-
-
+app.use("/resource" , ResourceRouter);
 app.use("/client", clientRouter);
 
 app.use((err,req,res,next)=>{
@@ -51,7 +46,7 @@ main().then(response =>{
     
 });
 async function main() {
-  await mongoose.connect("mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority");
+  await mongoose.connect("mongodb://localhost:27017/test");
 }
 // mongodb://localhost:27017/test
 //mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority
