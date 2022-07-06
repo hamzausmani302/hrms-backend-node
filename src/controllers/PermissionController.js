@@ -1,4 +1,4 @@
-getAllPermissions, addPermission, updatePermission, removePermission
+// getAllPermissions, addPermission, updatePermission, removePermission
 
 const express = require('express')
 const Permission = require('../Model/permissions.schema');
@@ -11,7 +11,7 @@ const addPermissionController = async (req,res)=>{
     const {createProject, readProject, addProject, updateProject, createResources, viewResources, 
     addResources, updateResources,
     createRole, viewRoles, addRoles, updateRoles,
-    createPermission, viewPermission, addPermission, updatePermission,
+    createPermission, viewPermission, addPermissions, updatePermission,
     createClient, viewClient, addClient, updateClient} = req.body;
 
     const NewPermission = new Permission({
@@ -32,7 +32,7 @@ const addPermissionController = async (req,res)=>{
         
         createPermission : createPermission,
         viewPermission : viewPermission,
-        addPermission : addPermission,
+        addPermissions : addPermissions,
         updatePermission : updatePermission,
     
         createClient : createClient,
@@ -83,7 +83,7 @@ const getAllPermissionsController = async (req, res)=>{
     }
 }
 
-module.exports.addPermission = addPermissionController;
-module.exports.getAllPermissions = getAllPermissionsController;
+module.exports.addPermissions = addPermissionController;
+module.exports.getAllPermission = getAllPermissionsController;
 module.exports.removePermission = removePermissionController;
 module.exports.updatePermission = updatePermissionController;
