@@ -1,8 +1,7 @@
-// getAllPermissions, addPermission, updatePermission, removePermission
 
 const express = require('express')
 const Permission = require('../Model/permissions.schema');
-const {getAllPermissions, addPermission, updatePermission, removePermission} = require('../Service/PermissionService.js');
+const { getAllPermissions, updatePermission, removePermission , addPermission} = require('../Service/PermissionService.js');
 
 
 
@@ -32,7 +31,7 @@ const addPermissionController = async (req,res)=>{
         
         createPermission : createPermission,
         viewPermission : viewPermission,
-        addPermissions : addPermissions,
+        "addPermission" : addPermissions,
         updatePermission : updatePermission,
     
         createClient : createClient,
@@ -45,14 +44,14 @@ const addPermissionController = async (req,res)=>{
         const result = await addPermission(NewPermission)
         res.send(result);
     }catch(err){
-        res.status(400).send({error : err})
+        res.status(400).send({error : err.message})
     }
 
 }
 
 const updatePermissionController = async (req, res)=>{
     const {id} = req.params;
-    const updates = req.body.updates;
+    const {updates} = req.body;
     try{
         const updatedUser = await updatePermission(id , updates);
         res.json(updatedUser);    
@@ -84,6 +83,6 @@ const getAllPermissionsController = async (req, res)=>{
 }
 
 module.exports.addPermissions = addPermissionController;
-module.exports.getAllPermission = getAllPermissionsController;
+module.exports.getAllPermissions = getAllPermissionsController;
 module.exports.removePermission = removePermissionController;
 module.exports.updatePermission = updatePermissionController;
