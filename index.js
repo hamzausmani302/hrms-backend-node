@@ -12,9 +12,8 @@ dotenv.config()
 
 const ProjectRouter = require('./src/Routes/projectRouter')
 const DeveloperRouter = require('./src/Routes/developerRouter')
-const AdminRouter = require('./src/Routes/adminRouter');
 const clientRouter = require('./src/Routes/clientRouter');
-
+const permissionRouter = require('./src/Routes/permissionRouter');
 
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -26,13 +25,8 @@ app.use(helmet())       //for security headers
 
 app.use("/project",ProjectRouter);
 app.use("/developer" , DeveloperRouter);
-
-
-
-
-
 app.use("/client", clientRouter);
-app.use("/administrator" , AdminRouter);
+app.use("/permission" , permissionRouter);
 
 app.use((err,req,res,next)=>{
 
