@@ -1,7 +1,7 @@
 const Permission = require('../Model/permissions.schema.js');
 
-const addPermission = async (client)=>{
-    const result = await Permission.save();   
+const addPermission = async (permission)=>{
+    const result = await permission.save();   
     return result;
 }
 const getAllPermissions = async (filter)=>{
@@ -18,7 +18,7 @@ const removePermission = async (id)=>{
     return deletedResult;
 }
 
-module.exports.addPermission = addPermission;
 module.exports.getAllPermissions = getAllPermissions;
 module.exports.updatePermission = updatePermission;
 module.exports.removePermission = removePermission;
+module.exports.addPermission = addPermission;
