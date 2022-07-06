@@ -19,7 +19,6 @@ const ProjectSchema = mongoose.Schema({
         required:true,
         default : Date.now()
     },
-
     startingDate : {
         type :Date ,
         validate: {
@@ -42,7 +41,7 @@ const ProjectSchema = mongoose.Schema({
 
     },
 
-    developersOnProject : {
+    resourcesOnProject : {
         type : [mongoose.Types.ObjectId]
     },
 

@@ -12,7 +12,6 @@ dotenv.config()
 
 const ProjectRouter = require('./src/Routes/projectRouter')
 const DeveloperRouter = require('./src/Routes/developerRouter')
-const AdminRouter = require('./src/Routes/adminRouter');
 const clientRouter = require('./src/Routes/clientRouter');
 
 
@@ -32,7 +31,6 @@ app.use("/developer" , DeveloperRouter);
 
 
 app.use("/client", clientRouter);
-app.use("/administrator" , AdminRouter);
 
 app.use((err,req,res,next)=>{
 
