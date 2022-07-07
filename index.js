@@ -28,12 +28,9 @@ app.use("/resource" , ResourceRouter);
 app.use("/client", clientRouter);
 app.use("/permission" , permissionRouter);
 
-app.use((err,req,res,next)=>{
-
-    const error = ErrorHandler(err);
-    res.status(error.status).send({message : error.message} );
-    
-})
+app.use(async (err, req, res, next) => {
+    ErrorHandler(err);
+});
 
 app.get("/" , (req,res)=>{
     res.send("In Development Phase")
