@@ -22,4 +22,4 @@ router.post("/login" , loginAsResource)
 
 router.put("/skills/:id" , updateSkills)
 
-module.exports = router;
+module.exports = router
