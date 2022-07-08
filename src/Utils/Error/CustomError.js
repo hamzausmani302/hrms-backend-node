@@ -14,7 +14,7 @@ class HTTP400Error extends BaseError {
 
 class HTTP404Error extends BaseError {
     constructor(desciption='not found'){
-        super('NOT FOUND' , HttpStatusCode.BAD_REQUEST  , desciption, true)
+        super('NOT FOUND' , HttpStatusCode.NOT_FOUND  , desciption, true)
     }
 }
 

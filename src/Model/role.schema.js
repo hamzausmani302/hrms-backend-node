@@ -10,7 +10,7 @@ const RoleSchema = mongoose.Schema({
     },
     permissions : {
         type : mongoose.Types.ObjectId,
-        default: null
+        required : true
     }
 })
 
