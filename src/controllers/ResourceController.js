@@ -5,7 +5,11 @@ const { JWT_SIGN, JWT_VERIFY } = require('../Utils/Authentication');
 const path = require("path");
 const { ResourceInfo } = require('../DTO/ResourceInfo');
 const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest } = require('../Service/ResourceService');
+const {addToken} = require("../Service/forgetPasswordService");
 const { HTTP404Error, APIError, HTTP400Error } = require('../Utils/Error/CustomError');
+const {passGenerator} = require("../Utils/PasswordGenerator");
+const resetPassword = require('../Model/resetPassword.schema');
+const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
 const addResourceController = async (req, res) => {
     const { name, address, designation, joiningDate, email, password, skills, roleId } = req.body;
     const resource = new Resource({
@@ -127,9 +131,33 @@ const loginAsResource = async (req, res) => {
 }
 
 
+const forgotPassword = async (req,res)=>{
+    const {email ,  user} = req.body;
+    //create  a random code
+    const code = passGenerator(6);
+    
+    //add the entry to mongoose 
+    const _resetPassword = new resetPassword({
+        userId : user._id,
+        email : email,
+        code : code,
+        status :  "ACTIVE"
+    })
+
+    const resetRecord = await _resetPassword.save().catch(err=>{
+        throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true  , err.message) 
+    });
+    res.status(200).send(resetRecord)
+    //send the reset code in email
+    
+    //
+}
+
+
 module.exports.addResource = addResourceController;
 module.exports.getAllResources = getResourcesController;
 module.exports.removeResource = removeResourceController;
 module.exports.updateResource = updateResourceController;
 module.exports.loginAsResource = loginAsResource;
 module.exports.updateSkills = updateSkillsController;
+module.exports.forgotPassword = forgotPassword;
