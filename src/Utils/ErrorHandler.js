@@ -3,7 +3,7 @@ const ErrorCodes = require('../config/ErrorVariables');
 
 const CustomError = (err)=>{
     return {
-        status : err.statusCode||500 , 
+        status : err.statusCode||err.httpCode||500 , 
         message : err.message
     }
 }

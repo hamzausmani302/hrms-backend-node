@@ -2,24 +2,27 @@
 const { MongooseError } = require('mongoose');
 const Project = require('../Model/project.schema');
 const {getProjectWithDevelopers,addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
-const { APIError , HTTP400Error } = require('../Utils/Error/CustomError');
+const { APIError , HTTP400Error, HTTP404Error } = require('../Utils/Error/CustomError');
+const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
 
 const addProjectController = async (req,res)=>{
      
-    const {name ,description , startingDate , dueDate , status , progress  } = req.body;
+    const {name ,description , startingDate , dueDate ,teamLead ,  status  , progress  } = req.body;
     const project = new Project({
         name : name , 
         description:description,
+        
         startingDate : startingDate , 
         dueDate : dueDate ,
         status : status,
-        progress : progress
+        progress : progress,
+        teamLead : teamLead
     });
 
   
     const result = await addProject(project).catch(err=>{
-        throw new HTTP400Error(err.message);
-    
+        console.log(err.message);
+        throw new APIError("ValidationError" , HttpStatusCode.BAD_REQUEST , true , err.message);
     })
     
     res.status(201).send(result);
@@ -32,14 +35,10 @@ const updateProjectController = async (req, res)=>{
     const {id} = req.params;
     const {updates} = req.body;
     const updatedUser = await updateProject(id , updates).catch(err=>{
-       const error = new Error(err.message);
-        error.statusCode = 202
-        throw error;
+       throw new APIError("DatabaseError" , 500 , true , err.message);
     });
     if(!updatedUser){
-        const error =  new Error("Resource not Found")
-        error.statusCode = 404;
-        throw error;
+        throw new HTTP404Error("Porject not found. Cannot update");
     }
         res.status(200).json(updatedUser);    
 }
