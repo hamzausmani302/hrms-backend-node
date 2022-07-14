@@ -1,6 +1,5 @@
 
 const mongoose = require("mongoose")
-const { reset } = require("nodemon")
 
 const resetPasswordSchema = mongoose.Schema({
     userId : {
@@ -23,14 +22,14 @@ const resetPasswordSchema = mongoose.Schema({
     },
     createdAt : {
         type : Date , 
-        default : Date.now()
+        default : Date.now(),
+        expires : '1m'
     },
     endDate : {
         type :Date , 
-        default : new Date(Date.now()).getTime() + 6000
+        default : new Date(Date.now()).getTime() 
     }
 
 })
-
 const resetPassword =mongoose.model("resetTokens" , resetPasswordSchema )
 module.exports=resetPassword;
