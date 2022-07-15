@@ -4,13 +4,13 @@ const {addClient, getAllClients, updateClient, removeClient} = require('../contr
 const {use} = require('../Middlewares/CatchError');
 const router = express.Router()
 
-router.get("/", getAllClients);
+router.get("/", use(getAllClients));
 
-router.post("/", addClient)
+router.post("/", use(addClient))
 
-router.put("/:id", updateClient)
+router.put("/:id", use(updateClient))
 
-router.delete("/:id", removeClient)
+router.delete("/:id", use(removeClient))
 
 
 module.exports = router;

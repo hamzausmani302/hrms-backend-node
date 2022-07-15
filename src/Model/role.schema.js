@@ -6,11 +6,12 @@ const RoleSchema = mongoose.Schema({
         type: String,
         required: true,
         minLength: 2,
-        maxLength: 30
+        maxLength: 30,
+        required : true
     },
     permissions : {
         type : mongoose.Types.ObjectId,
-        default: null
+        required : true
     }
 })
 

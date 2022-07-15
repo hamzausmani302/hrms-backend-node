@@ -14,7 +14,7 @@ const ProjectRouter = require('./src/Routes/projectRouter')
 const ResourceRouter = require('./src/Routes/resourceRouter')
 const clientRouter = require('./src/Routes/clientRouter');
 const permissionRouter = require('./src/Routes/permissionRouter');
-
+const roleRouter = require('./src/Routes/roleRouter')
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 app.use(cookieParser())
@@ -27,13 +27,12 @@ app.use("/project",ProjectRouter);
 app.use("/resource" , ResourceRouter);
 app.use("/client", clientRouter);
 app.use("/permission" , permissionRouter);
-
-app.use((err,req,res,next)=>{
-
-    const error = ErrorHandler(err);
-    res.status(error.status).send({message : error.message} );
-    
-})
+app.use("/role",roleRouter)
+app.use(async (err, req, res, next) => {
+    console.log("caught")
+    const errorObj = ErrorHandler(err);
+    res.status(errorObj.status).send({"error" : errorObj.message});
+});
 
 app.get("/" , (req,res)=>{
     res.send("In Development Phase")

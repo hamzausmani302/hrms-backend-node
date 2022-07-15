@@ -2,6 +2,7 @@
 const { MongooseError } = require('mongoose');
 const Project = require('../Model/project.schema');
 const {getProjectWithDevelopers,addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
+const { APIError , HTTP400Error } = require('../Utils/Error/CustomError');
 
 const addProjectController = async (req,res)=>{
      
@@ -17,9 +18,8 @@ const addProjectController = async (req,res)=>{
 
   
     const result = await addProject(project).catch(err=>{
-        const error = new Error(err.message)
-        error.statusCode = 202;
-        throw error;
+        throw new HTTP400Error(err.message);
+    
     })
     
     res.status(201).send(result);
