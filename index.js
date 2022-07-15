@@ -45,8 +45,20 @@ main().then(response =>{
     console.log(err)
     
 });
+
+
+async function getType(){
+    if(process.env.ENVTYPE=="production"){
+        return process.env.LIVE_LINK;
+    }
+
+    return process.env.TEST_LINK;
+}
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/test");
+
+    const DB_URI = await getType();
+    console.log(DB_URI)
+    await mongoose.connect(DB_URI);
 }
 // mongodb://localhost:27017/test
 //mongodb+srv://hamza:hamza@cluster0.zi0ab.mongodb.net/test?retryWrites=true&w=majority

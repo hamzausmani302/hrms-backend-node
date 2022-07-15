@@ -24,4 +24,3 @@ module.exports.getRoleService = getRoleService
 module.exports.addRoleService = addRoleService
 module.exports.updateRoleService = updateRoleService
 module.exports.removeRoleService = removeRoleService
-
