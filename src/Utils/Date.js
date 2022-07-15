@@ -12,5 +12,19 @@ const compare_dates = (startDate , createdAt)=>{
         document.write("both are equal");
 }
 
+const secondInTwoHours = ()=>{
+    return 60*60*2;
+}
+const differenceFromDate = ( d1 , d2=Date.now() )=>{
+    const seconds = Math.abs(d2-d1)/1000;
+    
+    return Math.ceil(seconds)
+    
+
+    
+}
+
 
 module.exports.compareDate = compare_dates;
+module.exports.secondInTwoHours = secondInTwoHours;
+module.exports.differenceFromDate = differenceFromDate;

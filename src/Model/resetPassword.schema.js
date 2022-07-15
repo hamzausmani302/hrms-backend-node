@@ -23,11 +23,15 @@ const resetPasswordSchema = mongoose.Schema({
     createdAt : {
         type : Date , 
         default : Date.now(),
-        expires : '1m'
+        // expires : '1m'
     },
     endDate : {
         type :Date , 
         default : new Date(Date.now()).getTime() 
+    },
+    used: {
+        type : Boolean,
+        default : false
     }
 
 })
