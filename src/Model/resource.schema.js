@@ -59,15 +59,15 @@ const ResourceSchema = mongoose.Schema({
             values :  ["LEFT" , "PRESENT"],
             message : "Invalid values provided"
         },
-        required : false
+        required : true
         
     },
-    availabilty : {
+    availability : {
       type : Number,
       required : true,
       default : 7,
-      minLength: 0,
-      maxLength : 7,
+      min: 0,
+      max: 7,
 
     }
 },

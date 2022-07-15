@@ -88,6 +88,15 @@ const getAResourceTest = async (filter)=>{
     return _resource
    
 }
+
+
+const forgetPassword = ()=>{
+    
+}
+const resourceOnBench = async()=>{
+    const result = await  Resource.find({"availability": { $lte: 7}})
+    return result
+}
 module.exports.addResource = addResource;
 module.exports.getAllResources = getAllResources;
 module.exports.updateResource = updateResource
@@ -95,3 +104,4 @@ module.exports.removeResource = removeResource;
 module.exports.addSkills = addSkills;
 module.exports.getAResource = getAResource;
 module.exports.getAResourceTest = getAResourceTest;
+module.exports.resourceOnBench = resourceOnBench;
