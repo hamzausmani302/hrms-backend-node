@@ -58,6 +58,7 @@ async function main() {
 
     const DB_URI = await getType();
     console.log(DB_URI)
+   
     await mongoose.connect(DB_URI);
 }
 // mongodb://localhost:27017/test

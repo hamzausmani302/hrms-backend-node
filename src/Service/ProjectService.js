@@ -39,7 +39,7 @@ const getDevelopersfromIdMultiple = async (ids)=>{
                 "progress" :1, 
                 "priority" : 1,
                 
-                "developersOnProject": { "$ifNull" : [ "$developersOnProject", [ ] ] } 
+                // "developersOnProject": { "$ifNull" : [ "$developersOnProject", [ ] ] } 
             }
         },
         {

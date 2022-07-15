@@ -19,10 +19,12 @@ class HTTP404Error extends BaseError {
 }
 
 class HTTP403Error extends BaseError{
-    constructor(description='forbidden access' , httpCode = HttpStatusCode.FORBIDDEN_ACCESS , desciption , isOperational){
-        super('FORBIDDEN ACCESS' , httpCode  ,"Access not allowed"  ,isOperational );
+    constructor(description='Forbidden access'){
+        super('FORBIDDEN ACCESS' , HttpStatusCode.FORBIDDEN_ACCESS  ,description ,true );
     }
 }
+
+
 module.exports.APIError = APIError
 module.exports.HTTP400Error = HTTP400Error
 module.exports.HTTP404Error = HTTP404Error
