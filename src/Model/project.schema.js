@@ -53,9 +53,10 @@ const ProjectSchema = mongoose.Schema({
     status : {
         type : String,
         enum : {
-            values :  ['Assigned' , "Ongoing" , "Completed"],
+            values :  ['ASSIGNED' , "ONGOING" , "COMLETED" , "CANCELLED"],
             message : "Unacceptable values provided"
-        }
+        },
+        default:"ASSIGNED"
     },
 
     priority : {

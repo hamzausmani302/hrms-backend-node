@@ -1,8 +1,8 @@
-getAllPermissions, addPermission, updatePermission, removePermission
 
 const express = require('express')
 const Permission = require('../Model/permissions.schema');
-const {getAllPermissions, addPermission, updatePermission, removePermission} = require('../Service/PermissionService.js');
+const { getAllPermissions, updatePermission, removePermission , addPermission} = require('../Service/PermissionService.js');
+const { HTTP400Error,APIError,HTTP404Error } = require('../Utils/Error/CustomError');
 
 
 
@@ -11,7 +11,7 @@ const addPermissionController = async (req,res)=>{
     const {createProject, readProject, addProject, updateProject, createResources, viewResources, 
     addResources, updateResources,
     createRole, viewRoles, addRoles, updateRoles,
-    createPermission, viewPermission, addPermission, updatePermission,
+    createPermission, viewPermission, addPermissions, updatePermission,
     createClient, viewClient, addClient, updateClient} = req.body;
 
     const NewPermission = new Permission({
@@ -32,7 +32,7 @@ const addPermissionController = async (req,res)=>{
         
         createPermission : createPermission,
         viewPermission : viewPermission,
-        addPermission : addPermission,
+        "addPermission" : addPermissions,
         updatePermission : updatePermission,
     
         createClient : createClient,
@@ -40,50 +40,54 @@ const addPermissionController = async (req,res)=>{
         addClient : addClient,
         updateClient : updateClient, 
     });
-
-    try{
-        const result = await addPermission(NewPermission)
-        res.send(result);
-    }catch(err){
-        res.status(400).send({error : err})
-    }
-
+        const result = await addPermission(NewPermission).catch(err=>{
+            throw new APIError("mongoose",500,true,err.message);
+          })
+          if(!result){
+            throw new HTTP400Error ("Invalid Fields")
+          }
+          res.status(200).json(result)
+ 
 }
 
 const updatePermissionController = async (req, res)=>{
     const {id} = req.params;
-    const updates = req.body.updates;
-    try{
-        const updatedUser = await updatePermission(id , updates);
-        res.json(updatedUser);    
-    }catch(err){
-        res.status(400).json({error : err})
-    }
+    const {updates} = req.body;
+   
+        const updatedUser = await updatePermission(id , updates)
+        .catch((err)=>{
+            throw new APIError("mongoose",500,true,err.message)
+          })
+        if(!updatedUser){
+            throw new HTTP400Error("Not Access")
+        }  
+        res.status(200).json(result)
+  
     
 }
 
 const removePermissionController = async (req, res)=>{
     const {id} = req.params;
-    try{
-        const result = await removePermission(id);
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err})
-    }
+   
+        const result = await removePermission(id)
+        .catch(err=>{
+            throw new APIError("mongoose",500,true,err.message)          
+        })
+          res.status(200).json(result)
 }
 
 const getAllPermissionsController = async (req, res)=>{
     const filter = req.query;
     
-    try{
-        const result = await getAllPermissions(filter);
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err});
-    }
+
+        const result = await getAllPermissions(filter)
+        .catch((err)=>{
+         throw new APIError("mongoose",500,true,err.message)
+        })
+        res.status(200).json(result)
 }
 
-module.exports.addPermission = addPermissionController;
+module.exports.addPermissions = addPermissionController;
 module.exports.getAllPermissions = getAllPermissionsController;
 module.exports.removePermission = removePermissionController;
 module.exports.updatePermission = updatePermissionController;

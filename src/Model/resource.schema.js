@@ -58,8 +58,17 @@ const ResourceSchema = mongoose.Schema({
         enum : {
             values :  ["LEFT" , "PRESENT"],
             message : "Invalid values provided"
-        }
+        },
+        required : true
         
+    },
+    availability : {
+      type : Number,
+      required : true,
+      default : 7,
+      min: 0,
+      max: 7,
+
     }
 },
 
