@@ -90,11 +90,9 @@ const getAResourceTest = async (filter)=>{
 }
 
 
-const forgetPassword = ()=>{
-    
-}
-const resourceOnBench = async()=>{
-    const result = await  Resource.find({"availability": { $lte: 7}})
+
+const resourceOnBench = async(threshhold)=>{
+    const result = await  Resource.find({"availability": { $lte: threshhold || 7}})
     return result
 }
 module.exports.addResource = addResource;

@@ -199,8 +199,9 @@ const changeForgottenPassword = async (req,res)=>{
 }
 
 const getResourceOnBench = async(req,res)=>{
+    const {threshhold } = req.query;
     
-    const result = await resourceOnBench()
+    const result = await resourceOnBench(threshhold)
     .catch(err=>{
         throw new APIError("MongooseError", 500, true, err.message);
     })
