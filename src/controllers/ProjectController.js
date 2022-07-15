@@ -21,7 +21,7 @@ const addProjectController = async (req,res)=>{
 
   
     const result = await addProject(project).catch(err=>{
-        console.log(err.message);
+        // console.log(err.message);
         throw new APIError("ValidationError" , HttpStatusCode.BAD_REQUEST , true , err.message);
     })
     

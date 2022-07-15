@@ -1,5 +1,7 @@
 const roleSchema = require('../Model/role.schema')
 
+
+
 const getRoleService = async()=>{
     const result =  await roleSchema.find({})
     return result;

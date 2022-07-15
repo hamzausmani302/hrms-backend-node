@@ -6,7 +6,6 @@ class APIError extends BaseError{
     }
 }
 
-
 class HTTP400Error extends BaseError {
     constructor(desciption='bad request'){
         super('BAD REQUEST' , HttpStatusCode.BAD_REQUEST , desciption,true)
