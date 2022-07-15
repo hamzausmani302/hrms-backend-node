@@ -7,7 +7,7 @@ const { ResourceInfo } = require('../DTO/ResourceInfo');
 const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest } = require('../Service/ResourceService');
 const { HTTP404Error, APIError, HTTP400Error } = require('../Utils/Error/CustomError');
 const addResourceController = async (req, res) => {
-    const { name, address, designation, joiningDate, email, password, skills, roleId } = req.body;
+    const { name, address, designation, joiningDate, email, password, skills, roleId  } = req.body;
     const resource = new Resource({
         name: name,
         address: address,
