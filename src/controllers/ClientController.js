@@ -1,56 +1,60 @@
 const express = require('express')
 const Client = require('../Model/client.schema');
 
-const {addClient , getAllClients , updateClient , removeClient} = require('../Service/ClientService.js');
-const addClientController = async (req,res)=>{
-     
-    const {name, organization } = req.body;
+const { addClient, getAllClients, updateClient, removeClient } = require('../Service/ClientService.js');
+const { HTTP400Error, APIError, HTTP404Error } = require('../Utils/Error/CustomError');
+const addClientController = async (req, res) => {
+
+    const { name, organization } = req.body;
     const client = new Client({
-        name : name,
-        organization : organization
+        name: name,
+        organization: organization
     });
-
-    try{
-        const result = await addClient(client)
-        res.send(result);
-    }catch(err){
-        res.status(400).send({error : err})
-    }
+     const result = await addClient(client)
+        .catch((err) => {
+            throw new APIError("mongoose", 500, true, err.message)
+        })
+    res.status(200).json(result)
 
 }
 
-const updateClientController = async (req, res)=>{
-    const {id} = req.params;
+const updateClientController = async (req, res) => {
+    const { id } = req.params;
     const updates = req.body.updates;
-    try{
-        const updatedUser = await updateClient(id , updates);
-        res.json(updatedUser);    
-    }catch(err){
-        res.status(400).json({error : err})
+    const updatedUser = await updateClient(id, updates)
+        .catch(err => {
+            throw new  APIError("mongoose", 500, true, err.message)
+        })
+    if (!updatedUser) {
+        throw new HTTP400Error("Not found Client")
     }
-    
+    res.status(200).json(updatedUser)
 }
 
-const removeClientController = async (req, res)=>{
-    const {id} = req.params;
-    try{
-        const result = await removeClient(id);
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err})
+const removeClientController = async (req, res) => {
+    const { id } = req.params;
+    const result = await removeClient(id)
+        .catch(err => {
+            throw new APIError("mongoose", 500, true, err.message)
+        })
+    if (!result) {
+        throw  new HTTP400Error("Request Not Access")
     }
+    res.status(200).json(result)
 }
 
-const getClientsController = async (req, res)=>{
+const getClientsController = async (req, res) => {
     const filter = req.query;
-    
-    try{
-        const result = await getAllClients(filter);
-        res.json(result);
-    }catch(err){
-        res.status(404).json({error : err});
+    const result = await getAllClients(filter)
+        .catch(err => {
+            throw new APIError("mongoose", 500, true, err.message)
+        })
+    if (!result) {
+        throw  new HTTP400Error("Request Not Access")
     }
+    res.status(200).json(result)
 }
+
 
 
 // const catchAsync= (fn) => {
