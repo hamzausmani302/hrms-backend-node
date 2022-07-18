@@ -1,9 +1,19 @@
 
 const { MongooseError } = require('mongoose');
 const Project = require('../Model/project.schema');
-const {getProjectWithDevelopers,addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
+const {getProjectWithDevelopers, searchProject, addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
 const { APIError , HTTP400Error, HTTP404Error } = require('../Utils/Error/CustomError');
 const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
+
+const getProjectByKeyword = async (req, res, next) =>{
+    const {key} = req.query;
+
+    const result = await searchProject(key);
+    if(!result)
+        return res.status(404).json({'message':result2});
+
+    return res.status(200).json({'message':result});
+}
 
 const addProjectController = async (req,res)=>{
      
@@ -117,3 +127,4 @@ module.exports.getAllProjects = getProjectsController;
 module.exports.removeProject = removeProjectController;
 module.exports.updateProject = updateProjectController;
 module.exports.getAllProjectInfo = getAllProjectInfo;
+module.exports.getProjectByKeyword = getProjectByKeyword;

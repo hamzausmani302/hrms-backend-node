@@ -4,7 +4,7 @@ const { AUTHENTICATE_HASH, HASH_PASSWORD } = require('../Utils/Encryption');
 const { JWT_SIGN, JWT_VERIFY } = require('../Utils/Authentication');
 const path = require("path");
 const { ResourceInfo } = require('../DTO/ResourceInfo');
-const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest } = require('../Service/ResourceService');
+const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest, searchResource} = require('../Service/ResourceService');
 const {addToken} = require("../Service/forgetPasswordService");
 const { HTTP404Error, APIError, HTTP400Error, HTTP403Error } = require('../Utils/Error/CustomError');
 const {passGenerator} = require("../Utils/PasswordGenerator");
@@ -12,6 +12,17 @@ const resetPassword = require('../Model/resetPassword.schema');
 const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
 const { sendMail } = require('../Utils/Mailer');
 const { update } = require('../Model/resource.schema');
+
+const getResourceByKeyword = async (req, res, next) =>{
+    const {key} = req.query;
+
+    const result = await searchResource(key);
+    if(!result)
+        return res.status(404).json({'message':result2});
+
+    return res.status(200).json({'message':result});
+}
+
 const addResourceController = async (req, res) => {
     const { name, address, designation, joiningDate, email, password, skills, roleId ,employmentStatus } = req.body;
     const resource = new Resource({
@@ -207,3 +218,4 @@ module.exports.updateSkills = updateSkillsController;
 module.exports.forgotPassword = forgotPassword;
 module.exports.verifyPassword = verifyCode;
 module.exports.changeForgottenPassword = changeForgottenPassword;
+module.exports.getResourceByKeyword = getResourceByKeyword;

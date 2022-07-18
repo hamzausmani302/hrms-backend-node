@@ -1,8 +1,19 @@
 const express = require('express')
 const Client = require('../Model/client.schema');
 
-const { addClient, getAllClients, updateClient, removeClient } = require('../Service/ClientService.js');
+const { addClient, getAllClients, updateClient, removeClient, searchClient} = require('../Service/ClientService.js');
 const { HTTP400Error, APIError, HTTP404Error } = require('../Utils/Error/CustomError');
+
+const getClientByKeyword = async (req, res, next) =>{
+    const {key} = req.query;
+
+    const result = await searchClient(key);
+    if(!result)
+        return res.status(404).json({'message':result2});
+
+    return res.status(200).json({'message':result});
+}
+
 const addClientController = async (req, res) => {
 
     const { name, organization } = req.body;
@@ -66,3 +77,4 @@ module.exports.addClient = addClientController;
 module.exports.getAllClients = getClientsController;
 module.exports.removeClient = removeClientController;
 module.exports.updateClient = updateClientController;
+module.exports.getClientByKeyword = getClientByKeyword;
