@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const {TEST, forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword} = require('../controllers/ResourceController');
+const {TEST, forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword} = require('../controllers/ResourceController');
 const {encrypt} = require('../Middlewares/EncryptPassword');
 const {getUserMiddleWare} = require("../Middlewares/getUser");
 const {sendMail} = require("../Utils/Mailer");
@@ -31,5 +31,7 @@ router.post("/recover-password" , use(getUserMiddleWare) ,use(forgotPassword) )
 router.post("/verify/:id" , use(getTokenMiddleWare) , use(verifyPassword)) 
 
 router.post("/new-password/:id" , use(checkIdMiddleWare) , use(changeForgottenPassword))
+
+router.get('/search', getResourceByKeyword);      //by query: localhost.../search?key= xyz
 
 module.exports = router

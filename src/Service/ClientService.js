@@ -1,4 +1,22 @@
 const Client = require('../Model/client.schema.js');
+
+const searchClient = async (key)=>{
+    const obj1 = await Project.find({name:{'$regex' : key, '$options' : 'i'}});
+    const obj3 = await Project.find({organization:{'$regex' : key, '$options' : 'i'}});
+
+    if(obj1 || obj3){
+        let objRes = [];
+        if(obj1)
+            objRes.push(obj1);
+        if(obj3)
+            objRes.push(obj3);
+
+        return objRes;
+    }else{
+        return "Client not found!";
+    }
+}
+
 const addClient = async (client)=>{
     const result = await client.save();   
     return result;
@@ -22,3 +40,5 @@ module.exports.addClient = addClient;
 module.exports.getAllClients = getAllClients;
 module.exports.updateClient = updateClient;
 module.exports.removeClient = removeClient;
+module.exports.searchClient = searchClient;
+

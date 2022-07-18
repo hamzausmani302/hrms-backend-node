@@ -9,6 +9,23 @@ const getAllProjects = async (filter)=>{
     return result;
 }
 
+const searchProject = async (key)=>{
+    const obj1 = await Project.find({name:{'$regex' : key, '$options' : 'i'}});
+    const obj3 = await Project.find({description:{'$regex' : key, '$options' : 'i'}});
+
+    if(obj1 || obj3){
+        let objRes = [];
+        if(obj1)
+            objRes.push(obj1);
+        if(obj3)
+            objRes.push(obj3);
+
+        return objRes;
+    }else{
+        return "Project not found!";
+    }
+}
+
 const updateProject = async (id , newProject)=>{
     const updatedResult = await Project.findOneAndUpdate({_id : id} , newProject , {new:true});
     return updatedResult;
@@ -91,4 +108,5 @@ module.exports.addProject = addProject;
 module.exports.getAllProjects = getAllProjects;
 module.exports.updateProject = updateProject;
 module.exports.removeProject = removeProject;
+module.exports.searchProject = searchProject;
 module.exports.getProjectWithDevelopers = getDevelopersfromIdMultiple;
