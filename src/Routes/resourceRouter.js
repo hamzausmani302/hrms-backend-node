@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const {TEST, forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword} = require('../controllers/ResourceController');
+const {TEST, forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench} = require('../controllers/ResourceController');
 const {encrypt} = require('../Middlewares/EncryptPassword');
 const {getUserMiddleWare} = require("../Middlewares/getUser");
 const {sendMail} = require("../Utils/Mailer");
@@ -14,23 +14,24 @@ const { APIError, HTTP400Error } = require('../Utils/Error/CustomError');
 
 const router = express.Router()
 
-router.get("/" , use(getAllResources));
+router.get("/", use(getAllResources));
 
-router.post("/" ,encrypt ,use(addResource))
+router.post("/", encrypt, use(addResource))
 
-router.put("/:id" ,use(updateResource))
+router.put("/:id", use(updateResource))
 
 router.delete("/:id", use(removeResource))
 
-router.post("/login" , use(loginAsResource))
+router.post("/login", use(loginAsResource))
 
-router.put("/skills/:id" , use(updateSkills))
+router.put("/skills/:id", use(updateSkills))
 
-router.post("/recover-password" , use(getUserMiddleWare) ,use(forgotPassword) )
+router.post("/recover-password", use(getUserMiddleWare), use(forgotPassword))
 
-router.post("/verify/:id" , use(getTokenMiddleWare) , use(verifyPassword)) 
+router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword))
 
-router.post("/new-password/:id" , use(checkIdMiddleWare) , use(changeForgottenPassword))
+router.post("/new-password/:id", use(checkIdMiddleWare), use(changeForgottenPassword))
+router.get('/onbench', use(getResourceOnBench))
 
 router.get('/search', getResourceByKeyword);      //by query: localhost.../search?key= xyz
 
