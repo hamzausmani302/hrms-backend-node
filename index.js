@@ -30,8 +30,8 @@ app.use("/permission" , permissionRouter);
 app.use("/role",roleRouter)
 app.use(async (err, req, res, next) => {
     console.log("caught")
-    const errorObj = ErrorHandler(err);
-    res.status(errorObj.status).send({"error" : errorObj.message});
+    const errorObj = ErrorHandler(err)
+    res.status(errorObj.status).send({"error" : errorObj.message})
 });
 
 app.get("/" , (req,res)=>{

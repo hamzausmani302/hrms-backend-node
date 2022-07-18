@@ -47,13 +47,12 @@ const ProjectSchema = mongoose.Schema({
 
     teamLead : {
         type : mongoose.Types.ObjectId,
-       
     },
 
     status : {
         type : String,
         enum : {
-            values :  ['ASSIGNED' , "ONGOING" , "COMLETED" , "CANCELLED"],
+            values :  ["ASSIGNED" , "UNASSIGNED", "ONGOING" , "COMLETED" , "CANCELLED"],
             message : "Unacceptable values provided"
         },
         default:"ASSIGNED"
