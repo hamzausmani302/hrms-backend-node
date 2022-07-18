@@ -20,7 +20,7 @@ const sendMailCode = async (reciever ,subject , code )=>{
         from : email,
         to : reciever,
         subject : subject,
-        text : `Your password reset code: ${code}\nDo not share with anyone else!\n\nValid for 2 minutes only.`
+        text : `You can use the following code to reset your password: ${code}\nIf you don't use this link within 2 minutes,it will expire.\n\nThanks,\nThe Codup-HRMS Team`
     }
     await transporter.sendMail(options , (err , info)=>{
         if(err){

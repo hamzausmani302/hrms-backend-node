@@ -152,7 +152,7 @@ const forgotPassword = async (req,res)=>{
         throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true  , err.message) 
     });
 
-    await sendMail(email , "Reset Password Code: Codup HRMS" , code).catch(err=>{
+    await sendMail(email , "[Codup-HRMS] Please reset your password" , code).catch(err=>{
         throw new APIError("EmailError" , 500 ,true , err.message)
     });
     
@@ -169,7 +169,7 @@ const verifyCode = async (req ,res)=>{
     const {code , resetDoc} = req.body;
     console.log(id ,  resetDoc , code);
     if(code != resetDoc.code){
-        throw new HTTP403Error("The confirmation code donot match")
+        throw new HTTP403Error("The confirmation code does not match!")
     }
     
     await resetPassword.findByIdAndUpdate(id , {used : true}).catch(err=>{

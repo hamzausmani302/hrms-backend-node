@@ -11,7 +11,7 @@ const ProjectSchema = mongoose.Schema({
 
     description : {
         type : String,
-        maxLength : 100
+        maxLength : 500
     },
 
     createdAt : {

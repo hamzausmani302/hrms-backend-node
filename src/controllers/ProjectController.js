@@ -48,14 +48,10 @@ const removeProjectController = async (req, res)=>{
    
         
     const result = await removeProject(id).catch(err=>{
-        const error =  new Error("Invalid Identifier")
-        error.statusCode = 400;
-        throw error;
+        throw new APIError("DatabaseError" , 500 ,true , err.message);
     })
     if(!result){
-        const error =  new Error("Resource not Found")
-        error.statusCode = 404;
-        throw error;
+        throw new HTTP404Error("Project not found");
     }
     res.status(200).json(result);
     
@@ -67,9 +63,7 @@ const getProjectsController = async (req, res)=>{
     const filter = req.query;
    
         const result = await getAllProjects(filter).catch(err=>{
-            const error = new Error(err.message);
-            error.statusCode = 404
-            throw error;
+            throw new APIError("DatabaseError" , 500 ,true , err.message);
         });
         res.status(200).json(result);
     
@@ -80,10 +74,11 @@ const addDeveloperToProject = async (req, res)=>{
     const {developerId:devId} = req.body;
    
     const addedResult = await addDeveloper_Project(projid, devId).catch(err=>{
-        const error = new Error(err.message);
-        error.statusCode = 202
-        throw error;
+        throw new APIError("DatabaseError" , 500 ,true , err.message);
     });
+    if(!addedResult){
+        throw new HTTP400Error("Unable to add project");
+    }
     res.status(200).json(addedResult);
 }
 
@@ -92,19 +87,18 @@ const removeDeveloperFromProject = async (req, res)=>{
     const {developerId:devId} = req.body;
     
     const removedResult = await removeDeveloper_Project(projid, devId).catch(err=>{
-        const error = new Error(err.message);
-        error.statusCode = 404
-        throw error;
+        throw new APIError("DatabaseError" , 500 ,true , err.message);
     });
+    if(!removedResult){
+        throw new HTTP404Error("Project not found");
+    }
     res.status(200).json(removedResult);
     
 }
 
 const getAllProjectInfo = async (req,res)=>{
         const allProjects = await getProjectWithDevelopers([]).catch(err=>{
-            const error = new Error(err.message);
-            error.statusCode = 404
-            throw error;
+            throw new APIError("DatabaseError" , 500 ,true , err.message);
         })
         res.status(200).json(allProjects);
     
