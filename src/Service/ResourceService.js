@@ -88,6 +88,11 @@ const getAResourceTest = async (filter)=>{
     return _resource
    
 }
+
+
+const forgetPassword = ()=>{
+    
+}
 module.exports.addResource = addResource;
 module.exports.getAllResources = getAllResources;
 module.exports.updateResource = updateResource

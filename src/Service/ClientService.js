@@ -1,5 +1,4 @@
 const Client = require('../Model/client.schema.js');
-
 const addClient = async (client)=>{
     const result = await client.save();   
     return result;
