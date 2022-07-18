@@ -53,7 +53,7 @@ const ProjectSchema = mongoose.Schema({
     status : {
         type : String,
         enum : {
-            values :  ['ASSIGNED' , "ONGOING" , "COMLETED" , "CANCELLED"],
+            values :  ["UNASSIGNED",'ASSIGNED' , "ONGOING" , "COMLETED" , "CANCELLED"],
             message : "Unacceptable values provided"
         }
     },
