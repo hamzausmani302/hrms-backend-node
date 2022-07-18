@@ -1,8 +1,8 @@
 const Client = require('../Model/client.schema.js');
 
 const searchClient = async (key)=>{
-    const obj1 = await Project.find({name:{'$regex' : key, '$options' : 'i'}});
-    const obj3 = await Project.find({organization:{'$regex' : key, '$options' : 'i'}});
+    const obj1 = await Client.find({name:{'$regex' : key, '$options' : 'i'}});
+    const obj3 = await Client.find({organization:{'$regex' : key, '$options' : 'i'}});
 
     if(obj1 || obj3){
         let objRes = [];
