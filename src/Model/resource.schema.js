@@ -61,6 +61,14 @@ const ResourceSchema = mongoose.Schema({
         },
         required : true
         
+    },
+    availability : {
+      type : Number,
+      required : true,
+      default : 7,
+      min: 0,
+      max: 7,
+
     }
 },
 

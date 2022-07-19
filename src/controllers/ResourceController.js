@@ -4,7 +4,9 @@ const { AUTHENTICATE_HASH, HASH_PASSWORD } = require('../Utils/Encryption');
 const { JWT_SIGN, JWT_VERIFY } = require('../Utils/Authentication');
 const path = require("path");
 const { ResourceInfo } = require('../DTO/ResourceInfo');
-const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest, searchResource} = require('../Service/ResourceService');
+
+const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest,resourceOnBench,searchResource } = require('../Service/ResourceService');
+
 const {addToken} = require("../Service/forgetPasswordService");
 const { HTTP404Error, APIError, HTTP400Error, HTTP403Error } = require('../Utils/Error/CustomError');
 const {passGenerator} = require("../Utils/PasswordGenerator");
@@ -24,7 +26,7 @@ const getResourceByKeyword = async (req, res, next) =>{
 }
 
 const addResourceController = async (req, res) => {
-    const { name, address, designation, joiningDate, email, password, skills, roleId ,employmentStatus } = req.body;
+    const { name, address, designation, joiningDate, email, password, skills, roleId ,employmentStatus,availability } = req.body;
     const resource = new Resource({
         name: name,
         address: address,
@@ -34,7 +36,8 @@ const addResourceController = async (req, res) => {
         password: password,
         roleId: roleId,
         employmentStatus : employmentStatus,
-        skills: [skills]                         //initially only one skill should be added!
+        skills: [skills],                        //initially only one skill should be added!
+        availability : availability                        
     });
 
     const result = await addResource(resource).catch(err => {
@@ -208,6 +211,19 @@ const changeForgottenPassword = async (req,res)=>{
     })
 }
 
+const getResourceOnBench = async(req,res)=>{
+    const {threshhold } = req.query;
+    
+    const result = await resourceOnBench(threshhold)
+    .catch(err=>{
+        throw new APIError("MongooseError", 500, true, err.message);
+    })
+    console.log(result)
+    if(!result){
+        throw new HTTP404Error("Resource not found"); 
+    }
+    res.status(200).json(result)
+}
 
 module.exports.addResource = addResourceController;
 module.exports.getAllResources = getResourcesController;
@@ -219,3 +235,4 @@ module.exports.forgotPassword = forgotPassword;
 module.exports.verifyPassword = verifyCode;
 module.exports.changeForgottenPassword = changeForgottenPassword;
 module.exports.getResourceByKeyword = getResourceByKeyword;
+module.exports.getResourceOnBench = getResourceOnBench;
