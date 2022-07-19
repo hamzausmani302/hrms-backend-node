@@ -13,22 +13,11 @@ const getAllResources = async (filter)=>{
 }
 
 const searchResource = async (key)=>{
-    const obj1 = await Resource.find({name:{'$regex' : key, '$options' : 'i'}});
-    const obj2 = await Resource.find({'employmentStatus': key});
-    const obj3 = await Resource.find({designation:{'$regex' : key, '$options' : 'i'}});
-
-    if(obj1 || obj2 || obj3){
-        let objRes = [];
-        if(obj1)
-            objRes.push(obj1);
-        if(obj2)
-            objRes.push(obj2);
-        if(obj3)
-            objRes.push(obj3);
-
+    try{
+        const objRes = await Product.find( { $or: [ {name:{'$regex' : key, '$options' : 'i'}},  {employmentStatus: key}, {designation:{'$regex' : key, '$options' : 'i'}} ] });
         return objRes;
-    }else{
-        return "Resource not found!";
+    }catch(err){
+        return "No such product found!";
     }
 }
 
