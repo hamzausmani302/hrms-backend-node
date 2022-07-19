@@ -2,6 +2,7 @@ const express = require('express')
 const Client = require('../Model/client.schema');
 
 const { addClient, getAllClients, updateClient, removeClient, searchClient} = require('../Service/ClientService.js');
+const {getNumberOfProjects} = require('../Service/ProjectService.js');
 const { HTTP400Error, APIError, HTTP404Error } = require('../Utils/Error/CustomError');
 
 const getClientByKeyword = async (req, res, next) =>{
@@ -9,9 +10,19 @@ const getClientByKeyword = async (req, res, next) =>{
 
     const result = await searchClient(key);
     if(!result)
-        return res.status(404).json({'message':result2});
+        throw new APIError("mongoose", 500, true, err.message)
 
     return res.status(200).json({'message':result});
+}
+
+const getProjectsOfClient = async(req, res, next){
+    const {clientId} = req.query;
+
+    const result = await getNumberOfProjects(clientId)
+        .catch((err) => {
+            throw new APIError("mongoose", 500, true, err.message)
+        })
+    res.status(200).json(result)
 }
 
 const addClientController = async (req, res) => {
@@ -78,3 +89,4 @@ module.exports.getAllClients = getClientsController;
 module.exports.removeClient = removeClientController;
 module.exports.updateClient = updateClientController;
 module.exports.getClientByKeyword = getClientByKeyword;
+module.exports.getProjectsOfClient = getProjectsOfClient;
