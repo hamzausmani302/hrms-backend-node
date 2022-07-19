@@ -15,7 +15,7 @@ const getClientByKeyword = async (req, res, next) =>{
     return res.status(200).json({'message':result});
 }
 
-const getProjectsOfClient = async(req, res, next){
+const getProjectsOfClient = async(req, res, next) => {
     const {clientId} = req.query;
 
     const result = await getNumberOfProjects(clientId)
