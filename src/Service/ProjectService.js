@@ -100,6 +100,8 @@ const getDevelopersfromIdMultiple = async (ids)=>{
 
 const getNumberOfProjects = async(clientId) =>{
     const result = await Project.find({clientId : clientId});
+    console.log(clientId)
+    console.log("fjuebe"+result);
     return result;
 }
 

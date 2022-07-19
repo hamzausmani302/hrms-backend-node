@@ -15,9 +15,8 @@ const getProjectByKeyword = async (req, res, next) =>{
     return res.status(200).json({'message':result});
 }
 
-const addProjectController = async (req,res)=>{
-     
-    const {name ,description , startingDate , dueDate ,teamLead ,  status  , progress  } = req.body;
+const addProjectController = async (req,res)=>{ 
+    const {name ,description , startingDate , dueDate ,teamLead ,  status  , progress, clientId } = req.body;
     const project = new Project({
         name : name , 
         description:description,
@@ -26,9 +25,9 @@ const addProjectController = async (req,res)=>{
         dueDate : dueDate ,
         status : status,
         progress : progress,
+        clientId : clientId,
         teamLead : teamLead
     });
-
   
     const result = await addProject(project).catch(err=>{
         // console.log(err.message);
@@ -36,9 +35,6 @@ const addProjectController = async (req,res)=>{
     })
     
     res.status(201).send(result);
-    
-    
-
 }
 
 const updateProjectController = async (req, res)=>{
