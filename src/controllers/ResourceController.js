@@ -4,7 +4,8 @@ const {AUTHENTICATE_HASH , HASH_PASSWORD} = require('../Utils/Encryption');
 const {JWT_SIGN , JWT_VERIFY} =  require('../Utils/Authentication');
 const path = require("path");
 const {ResourceInfo} = require('../DTO/ResourceInfo');
-const {addResource , getAllResources , updateResource , removeResource, addSkills} = require('../Service/ResourceService');
+const {addResource , getAllResources , updateResource , removeResource, addSkills,getResourceWithRole} = require('../Service/ResourceService');
+
 const addResourceController = async (req,res)=>{
     const {name , address ,designation ,  joiningDate ,email, password, skills} = req.body;
     const developer = new Resource({
@@ -110,9 +111,19 @@ const loginAsResource = async (req,res)=>{
     }
 }
 
+const getAllResourceInfo = async (req,res)=>{
+    const allResources = await getResourceWithRole([]).catch(err=>{
+        const error = new Error(err.message);
+        error.statusCode = 404
+        throw error;
+    })
+    res.status(200).json(allResources);
+}
+
 module.exports.addResource = addResourceController;
 module.exports.getAllResources = getResourcesController;
 module.exports.removeResource = removeResourceController;
 module.exports.updateResource = updateResourceController;
 module.exports.loginAsResource = loginAsResource;
 module.exports.updateSkills = updateSkillsController;
+module.exports.getAllResourceInfo = getAllResourceInfo;

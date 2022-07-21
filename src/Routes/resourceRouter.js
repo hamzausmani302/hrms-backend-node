@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const {addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills} = require('../controllers/ResourceController');
+const {addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, getAllResourceInfo} = require('../controllers/ResourceController');
 const {encrypt} = require('../Middlewares/EncryptPassword');
 
 const {use} = require('../Middlewares/CatchError');
@@ -21,5 +21,8 @@ router.delete("/:id", removeResource)
 router.post("/login" , loginAsResource)
 
 router.put("/skills/:id" , updateSkills)
+
+router.get("/all" ,use(getAllResourceInfo))
+
 
 module.exports = router;
