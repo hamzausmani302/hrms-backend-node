@@ -30,6 +30,7 @@ const removeResource = async (id)=>{
     const deletedResult = await Resource.findOneAndDelete({_id : id});
     return deletedResult;
 }
+
 const addSkills = async(id, updates) =>{
     const {skills} = updates;
     const addedResult = await Resource.findOneAndUpdate({_id : id},  {$push: { skills: skills }}, {new:true});

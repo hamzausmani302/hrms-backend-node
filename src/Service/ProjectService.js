@@ -19,6 +19,12 @@ const searchProject = async (key)=>{
     }
 }
 
+const addResourcesToProject = async(id, updates) =>{
+    const {resourcesOnProject} = updates;
+    const addedResult = await Resource.findOneAndUpdate({_id : id},  {$push: { resourcesOnProject: resourcesOnProject }}, {new:true});
+    return addedResult;
+}
+
 const updateProject = async (id , newProject)=>{
     const updatedResult = await Project.findOneAndUpdate({_id : id} , newProject , {new:true});
     return updatedResult;
@@ -29,13 +35,8 @@ const removeProject = async (id)=>{
     return deletedResult;
 }
 
-const addDeveloperToProject = async(projId, id)=>{
-    const addedResult = await Project.findOneAndUpdate({_id : projId}, {$push: { developersOnProject: id }}, {new:true});
-    return addedResult;
-}
-
-const removeDev_Project = async(projId, id)=>{
-    const deletedResult = await Project.findOneAndUpdate({_id : projId}, {$pull: { developersOnProject: id }}, {new:true});
+const removeRes_Project = async(projId, id)=>{
+    const deletedResult = await Project.findOneAndUpdate({_id : projId}, {$pull: { resourcesOnProject: id }}, {new:true});
     return deletedResult;
 }
 
@@ -105,12 +106,15 @@ const getNumberOfProjects = async(clientId) =>{
     return result;
 }
 
-module.exports.removeDeveloper_Project = removeDev_Project;
-module.exports.addDeveloper_Project = addDeveloperToProject;
+module.exports.addResourcesToProject =  addResourcesToProject;
 module.exports.addProject = addProject;
+
 module.exports.getAllProjects = getAllProjects;
+
 module.exports.updateProject = updateProject;
 module.exports.removeProject = removeProject;
+module.exports.removeRes_Project = removeRes_Project;
+
 module.exports.searchProject = searchProject;
 module.exports.getProjectWithDevelopers = getDevelopersfromIdMultiple;
 module.exports.getNumberOfProjects = getNumberOfProjects;

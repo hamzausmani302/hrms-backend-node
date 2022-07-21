@@ -1,9 +1,10 @@
 
 const { MongooseError } = require('mongoose');
 const Project = require('../Model/project.schema');
-const {getProjectWithDevelopers, searchProject, addProject , getAllProjects , updateProject , removeProject ,addDeveloper_Project, removeDeveloper_Project} = require('../Service/ProjectService.js');
+const {getProjectWithDevelopers, searchProject, addProject , getAllProjects , updateProject , removeProject, addResourcesToProject, removeRes_Project} = require('../Service/ProjectService.js');
 const { APIError , HTTP400Error, HTTP404Error } = require('../Utils/Error/CustomError');
 const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
+const result2 = "Project doesn't exist!";
 
 const getProjectByKeyword = async (req, res, next) =>{
     const {key} = req.query;
@@ -81,11 +82,11 @@ const getProjectsController = async (req, res)=>{
     
 }
 
-const addDeveloperToProject = async (req, res)=>{
+const addResourcesToProjectController = async (req, res)=>{
     const {id:projid} = req.params;
-    const {developerId:devId} = req.body;
+    const {resourceId:resId} = req.body;
    
-    const addedResult = await addDeveloper_Project(projid, devId).catch(err=>{
+    const addedResult = await addResourcesToProject(projid, resId).catch(err=>{
         const error = new Error(err.message);
         error.statusCode = 202
         throw error;
@@ -93,11 +94,11 @@ const addDeveloperToProject = async (req, res)=>{
     res.status(200).json(addedResult);
 }
 
-const removeDeveloperFromProject = async (req, res)=>{
+const removeResourceFromProject = async (req, res)=>{
     const {id:projid} = req.params;
-    const {developerId:devId} = req.body;
+    const {resourceId:resId} = req.body;
     
-    const removedResult = await removeDeveloper_Project(projid, devId).catch(err=>{
+    const removedResult = await removeRes_Project(projid, resId).catch(err=>{
         const error = new Error(err.message);
         error.statusCode = 404
         throw error;
@@ -116,8 +117,8 @@ const getAllProjectInfo = async (req,res)=>{
     
 }
 
-module.exports.removeDeveloperFromProject = removeDeveloperFromProject;
-module.exports.addDeveloperToProject = addDeveloperToProject;
+module.exports.removeResourceFromProject = removeResourceFromProject;
+module.exports.addResourcesToProjectController = addResourcesToProjectController;
 module.exports.addProject = addProjectController;
 module.exports.getAllProjects = getProjectsController;
 module.exports.removeProject = removeProjectController;

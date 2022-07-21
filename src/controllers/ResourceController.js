@@ -45,9 +45,6 @@ const addResourceController = async (req, res) => {
     })
 
     res.status(201).send(result);
-
-
-
 }
 
 const updateResourceController = async (req, res) => {
@@ -132,21 +129,12 @@ const loginAsResource = async (req, res) => {
         }
         throw new HTTP404Error("Incorrect username of password");
 
-
-
-
-
-
-
-
-
     } catch (err) {
         console.log(err);
         res.status(404).json({ error: err });
 
     }
 }
-
 
 const forgotPassword = async (req,res)=>{
     const {email ,  user} = req.body;
@@ -173,9 +161,7 @@ const forgotPassword = async (req,res)=>{
     res.status(200).send({
         result : resetRecord,
         redirectionUrl : `/resource/verify/${resetRecord._id}`
-    })
-    
-        
+    })      
 }
 
 const verifyCode = async (req ,res)=>{
