@@ -20,6 +20,6 @@ router.put("/removeDev/:id" , use(removeDeveloperFromProject));
 
 router.get("/all" ,use(getAllProjectInfo));
 
-router.get('/search', getProjectByKeyword);      //by query: localhost.../search?key= xyz
+router.get('/search', use(getProjectByKeyword));      //by query: localhost.../search?key= xyz
 
 module.exports = router;
