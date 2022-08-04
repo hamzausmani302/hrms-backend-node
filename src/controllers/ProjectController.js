@@ -71,7 +71,7 @@ const removeProjectController = async (req, res)=>{
 
 const getProjectsController = async (req, res)=>{
     const filter = req.query;
-   
+    
         const result = await getAllProjects(filter).catch(err=>{
             const error = new Error(err.message);
             error.statusCode = 404

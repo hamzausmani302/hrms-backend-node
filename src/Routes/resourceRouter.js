@@ -9,12 +9,13 @@ const {getTokenMiddleWare} = require('../Middlewares/getToken');
 const {checkIdMiddleWare}  = require('../Middlewares/checkIdMiddleWare');
 const {use} = require('../Middlewares/CatchError');
 const { APIError, HTTP400Error } = require('../Utils/Error/CustomError');
+const { authorizeUserMiddleWare } = require('../Middlewares/auth');
 
 
 
 const router = express.Router()
 
-router.get("/", use(getAllResources));
+router.get("/",use(authorizeUserMiddleWare) , use(getAllResources));
 
 router.post("/", encrypt, use(addResource))
 
