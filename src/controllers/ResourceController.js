@@ -5,7 +5,7 @@ const { JWT_SIGN, JWT_VERIFY } = require('../Utils/Authentication');
 const path = require("path");
 const { ResourceInfo } = require('../DTO/ResourceInfo');
 
-const { addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest,resourceOnBench,searchResource } = require('../Service/ResourceService');
+const {getProjectsOfResources, addResource, getAllResources, updateResource, removeResource, addSkills, getAResource, getAResourceTest,resourceOnBench,searchResource } = require('../Service/ResourceService');
 
 const {addToken} = require("../Service/forgetPasswordService");
 const { HTTP404Error, APIError, HTTP400Error, HTTP403Error } = require('../Utils/Error/CustomError');
@@ -224,7 +224,19 @@ const getResourceOnBench = async(req,res)=>{
     }
     res.status(200).json(result)
 }
+const getProjectsOfResourcesController = async (req,res)=>{
+    const {id} = req.params;
+    const {status} = req.query;
+    console.log(id,status);
+    const _projects = await getProjectsOfResources(id ,status).catch(err=>{
+        throw new APIError("DatabaseError" , 500 , true ,  err.message);
+    });
+    if(!_projects){
+        throw new HTTP404Error("Not found");
+    }
+    res.status(200).json(_projects);
 
+}
 module.exports.addResource = addResourceController;
 module.exports.getAllResources = getResourcesController;
 module.exports.removeResource = removeResourceController;
@@ -236,3 +248,4 @@ module.exports.verifyPassword = verifyCode;
 module.exports.changeForgottenPassword = changeForgottenPassword;
 module.exports.getResourceByKeyword = getResourceByKeyword;
 module.exports.getResourceOnBench = getResourceOnBench;
+module.exports.getProjectsOfResourcesController = getProjectsOfResourcesController;

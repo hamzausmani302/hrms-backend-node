@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const {TEST, forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench} = require('../controllers/ResourceController');
+const { forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench, getProjectsOfResourcesController} = require('../controllers/ResourceController');
 const {encrypt} = require('../Middlewares/EncryptPassword');
 const {getUserMiddleWare} = require("../Middlewares/getUser");
 const {sendMail} = require("../Utils/Mailer");
@@ -35,5 +35,5 @@ router.post("/new-password/:id", use(checkIdMiddleWare), use(changeForgottenPass
 router.get('/onbench', use(getResourceOnBench))
 
 router.get('/search', use(getResourceByKeyword));      //by query: localhost.../search?key= xyz
-
+router.get('/projects/:id' , use(getProjectsOfResourcesController) )
 module.exports = router
