@@ -36,7 +36,7 @@ const addResourceController = async (req, res) => {
         password: password,
         roleId: roleId,
         employmentStatus : employmentStatus,
-        skills: [skills],                        //initially only one skill should be added!
+        skills: skills,                        //initially only one skill should be added!
         availability : availability                        
     });
 
