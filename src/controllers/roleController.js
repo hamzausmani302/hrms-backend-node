@@ -1,4 +1,4 @@
-const { addRoleService,updateRoleService,removeRoleService, getRoleService} = require('../Service/RoleService')  
+const { addRoleService,updateRoleService,removeRoleService, getRoleService, getRoleWithPermissionsService} = require('../Service/RoleService')  
 const {APIError}  =require('../Utils/Error/CustomError');  
 const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
 
@@ -23,7 +23,7 @@ const removeRole = async(req,res)=>{
 
 }
 const getRoles = async (req,res)=>{
-  const result = await getRoleService().catch(err=>{
+  const result = await getRoleWithPermissionsService().catch(err=>{
     throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true ,  err.message)
   })
   res.status(200).json(result);

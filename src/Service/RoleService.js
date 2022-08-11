@@ -1,6 +1,22 @@
 const roleSchema = require('../Model/role.schema')
 
-
+const getRoleWithPermissionsService = async ()=>{
+    const aggregation = [
+        
+            {
+                "$lookup" : {
+                    from : "permissions",
+                    localField : "permissions",
+                    foreignField : "_id",
+                    as : "permissions",
+                    
+                }
+            }
+        
+    ]
+    const result = await roleSchema.aggregate(aggregation);
+    return result;
+}
 
 const getRoleService = async()=>{
     const result =  await roleSchema.find({})
@@ -24,3 +40,4 @@ module.exports.getRoleService = getRoleService
 module.exports.addRoleService = addRoleService
 module.exports.updateRoleService = updateRoleService
 module.exports.removeRoleService = removeRoleService
+module.exports.getRoleWithPermissionsService = getRoleWithPermissionsService
