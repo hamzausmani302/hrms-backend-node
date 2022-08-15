@@ -8,14 +8,16 @@ const {sendMail} = require("../Utils/Mailer");
 const {getTokenMiddleWare} = require('../Middlewares/getToken');
 const {checkIdMiddleWare}  = require('../Middlewares/checkIdMiddleWare');
 const {use} = require('../Middlewares/CatchError');
-const { APIError, HTTP400Error } = require('../Utils/Error/CustomError');
+const { APIError, HTTP400Error, HTTP403Error } = require('../Utils/Error/CustomError');
 const { authorizeUserMiddleWare } = require('../Middlewares/auth');
-
+const { getPermissionById } = require('../Middlewares/getPermissionById');
+const { Authorizer } = require('../Middlewares/Authorizer');
+// use(Authorizer.AuthGetDeveloper) ,
 
 
 const router = express.Router()
 
-router.get("/",use(authorizeUserMiddleWare) , use(getAllResources));
+router.get("/",use(getPermissionById) , use(authorizeUserMiddleWare)  , use(getAllResources));
 
 router.post("/", encrypt, use(addResource))
 

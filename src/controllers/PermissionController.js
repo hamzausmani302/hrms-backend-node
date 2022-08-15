@@ -7,14 +7,15 @@ const { HTTP400Error,APIError,HTTP404Error } = require('../Utils/Error/CustomErr
 
 
 const addPermissionController = async (req,res)=>{
-
+    const {name} = req.body;
     const {createProject, readProject, addProject, updateProject, createResources, viewResources, 
     addResources, updateResources,
     createRole, viewRoles, addRoles, updateRoles,
     createPermission, viewPermission, addPermissions, updatePermission,
-    createClient, viewClient, addClient, updateClient} = req.body;
+    createClient, viewClient, addClient, updateClient} = req.body.permissions;
 
     const NewPermission = new Permission({
+        name : name,
         createProject : createProject,
         readProject : readProject,
         addProject : addProject,

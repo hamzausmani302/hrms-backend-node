@@ -17,8 +17,12 @@ const removePermission = async (id)=>{
     const deletedResult = await Permission.findOneAndDelete({_id : id});
     return deletedResult;
 }
-
+const getPermissionByIdService = async (id)=>{
+    const permission = await Permission.findById(id);
+    return permission
+}
 module.exports.getAllPermissions = getAllPermissions;
 module.exports.updatePermission = updatePermission;
 module.exports.removePermission = removePermission;
 module.exports.addPermission = addPermission;
+module.exports.getPermissionByIdService = getPermissionByIdService;
