@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const PermissionSchema = mongoose.Schema({
+    name: {type: String , required : true},
     createProject : {type : Boolean , default : false },
     readProject : {type : Boolean , default : false },
     addProject : {type : Boolean , default : false },
