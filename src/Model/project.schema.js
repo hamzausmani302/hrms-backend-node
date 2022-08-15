@@ -56,7 +56,7 @@ const ProjectSchema = mongoose.Schema({
             values :  ["UNASSIGNED",'ASSIGNED' , "ONGOING" , "COMLETED" , "CANCELLED"],
             message : "Unacceptable values provided"
         },
-        default:"ASSIGNED"
+        default:"UNASSIGNED"
     },
 
     priority : {
