@@ -5,28 +5,28 @@ const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
  const addRole = async(req,res)=>{
     const {roleName,permissions} = req.body
     const result = await addRoleService(roleName,permissions)
-    res.send(result.json())
+    res.status(200).json(result)
  }
 
   const updateRole = async(req,res)=>{
   const {id} = req.params
   const {roleName,permissions} = req.body
   const result = await updateRoleService(id,roleName,permissions)
-  res.send(result.json())
+  res.status(200).json(result)
 
 }
 
 const removeRole = async(req,res)=>{
     const {id} = req.params  
     const result = await removeRoleService(id)
-    res.send(result.json())
+    res.status(200).json(result)
 
 }
 const getRoles = async (req,res)=>{
   const result = await getRoleWithPermissionsService().catch(err=>{
     throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true ,  err.message)
   })
-  res.status(200).json(result);
+  res.status(200).json(result)
 }
 module.exports.addRole = addRole
 module.exports.updateRole = updateRole
