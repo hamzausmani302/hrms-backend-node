@@ -33,7 +33,7 @@ router.post("/recover-password", use(getUserMiddleWare), use(forgotPassword))
 
 router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword))
 
-router.post("/new-password/:id", use(checkIdMiddleWare), use(changeForgottenPassword))
+router.put("/new-password/:id", use(checkIdMiddleWare), use(changeForgottenPassword))
 router.get('/onbench', use(getResourceOnBench))
 
 router.get('/search', use(getResourceByKeyword));      //by query: localhost.../search?key= xyz
