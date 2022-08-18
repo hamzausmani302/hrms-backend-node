@@ -12,6 +12,7 @@ const getUserMiddleWare =async  (req,res,next)=>{
     const user = await Resource.findOne({email : email}).catch(err=>{
         throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true , err.message);
     })
+    console.log(user);
     if(!user){
         throw new HTTP404Error("Resource not found");
     }

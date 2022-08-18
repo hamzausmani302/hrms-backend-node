@@ -77,19 +77,7 @@ const getAResourceTest = async (filter)=>{
             }
         },
         {   "$unwind":"$permission" }, 
-        // {
-        //     "$project" : {
-        //         _id :1,
-        //         name : 1,
-        //         address: 1,
-        //         designation : 1,
-        //         joiningDate : 1,
-        //         email : 1,
-        //         skills : 1,
-        //         newRole : 1,
-        //         permission : 1
-        //     }
-        // }
+       
     ]
     const _resource =await  Resource.aggregate(aggregation)
    
