@@ -24,8 +24,13 @@ class HTTP403Error extends BaseError{
     }
 }
 
-
+class HTTP410Error extends BaseError{
+    constructor(desciption = "Expired resource"){
+        super("ExpiredToken" , HttpStatusCode.EXPIRED_RESOURCE , desciption , true);
+    }
+}
 module.exports.APIError = APIError
 module.exports.HTTP400Error = HTTP400Error
 module.exports.HTTP404Error = HTTP404Error
 module.exports.HTTP403Error = HTTP403Error
+module.exports.HTTP410Error = HTTP410Error;

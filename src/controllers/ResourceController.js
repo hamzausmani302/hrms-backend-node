@@ -112,6 +112,7 @@ const loginAsResource = async (req, res) => {
         const _resource = await getAResourceTest(filter).catch(err => {
             throw new APIError("mongoose error", 500, true, err.message)
         })
+        console.log(_resource);
         if (_resource && _resource.length == 0) {
             throw new HTTP404Error("Incorrect username or password");
         }
@@ -200,7 +201,7 @@ const verifyCode = async (req ,res)=>{
 const changeForgottenPassword = async (req,res)=>{
     const {id , password} =req.body;
     const hash = await HASH_PASSWORD(password);
-    const updatedResult = await Resource.findByIdAndUpdate(id , {password : hash }).catch(err=>{
+    const updatedResult = await Resource.findByIdAndUpdate(id , {password : hash , used:true , status:"INACTIVE" }).catch(err=>{
         throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true , err.message)
     });
     if(!updatedResult){
