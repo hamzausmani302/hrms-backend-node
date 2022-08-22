@@ -52,30 +52,48 @@ const getDevelopersfromIdMultiple = async (ids)=>{
                 "dueDate" : 1,
                 "progress" :1, 
                 "priority" : 1,
-                
-                // "developersOnProject": { "$ifNull" : [ "$developersOnProject", [ ] ] } 
+                "clientId":1,
+                "resourcesOnProject": { "$ifNull" : [ "$resourcesOnProject", null ] } 
             }
         },
         {
+            "$lookup": {
+                "from": "clients",
+                "localField": "clientId",
+                "foreignField": "_id",
+                "as": "client",
+                // "pipeline": [
+                   
+                //     { "$project": { "_id": 1 , "__v" : 0, "password" : 0 }}
+                //   ],
+                
+            }
+        },
+
+
+        {
            "$unwind": {
-               "path": "$developersOnProject",
+               "path": "$resourcesOnProject",
                "preserveNullAndEmptyArrays": true
             }
         },    
-        // { "$unwind": "$developersOnProject" },  
         {
             "$lookup": {
-                "from": "developers",
-                "localField": "developersOnProject",
+                "from": "resources",
+                "localField": "resourcesOnProject",
                 "foreignField": "_id",
-                "as": "developersOnProject",
-                "pipeline": [
+                "as": "resourcesOnProject",
+                // "pipeline": [
                    
-                    { "$project": { "_id": 1 , "__v" : 0, "password" : 0 }}
-                  ],
+                //     { "$project": { "_id": 1 , "__v" : 0, "password" : 0 }}
+                //   ],
                 
             }
         },
+       
+        
+
+
        {
         "$group" : {
             "_id" : "$_id",
@@ -86,8 +104,9 @@ const getDevelopersfromIdMultiple = async (ids)=>{
             "dueDate" : {"$first" : "$dueDate"},
             "status" : {"$first" : "$status"},
             "priority" : {"$first" : "$priority"},
-            "developersOnProject" : {"$push" : "$developersOnProject"},
-
+            "resourcesOnProject" : {"$push" : "$resourcesOnProject"},
+            "clientId" : {"$first" : "$clientId" },
+            "client" : {"$first" : "$client"}
         }
        }
     
@@ -101,7 +120,7 @@ const getDevelopersfromIdMultiple = async (ids)=>{
 const getNumberOfProjects = async(clientId) =>{
     const result = await Project.find({clientId : clientId});
     console.log(clientId)
-    console.log("fjuebe"+result);
+    
     return result;
 }
 
