@@ -1,7 +1,5 @@
 const resetPassword = require("../Model/resetPassword.schema");
 
-const addToken = (resetPasswordInfo)=>{
-    
-}
+const addToken = (resetPasswordInfo) => {};
 
 module.exports.addToken = addToken;
