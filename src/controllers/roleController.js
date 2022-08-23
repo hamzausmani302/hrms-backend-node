@@ -4,21 +4,27 @@ const HttpStatusCode = require('../Utils/Error/HttpStatusCode');
 
  const addRole = async(req,res)=>{
     const {roleName,permissions} = req.body
-    const result = await addRoleService(roleName,permissions)
+    const result = await addRoleService(roleName,permissions).catch(err => {
+      throw new APIError("MongooseError", 500, true, err.message);
+  });
     res.status(200).json(result)
  }
 
   const updateRole = async(req,res)=>{
   const {id} = req.params
-  const {roleName,permissions} = req.body
-  const result = await updateRoleService(id,roleName,permissions)
+  const {updates} = req.body
+  const result = await updateRoleService(id,updates).catch(err => {
+    throw new APIError("MongooseError", 500, true, err.message);
+});
   res.status(200).json(result)
 
 }
 
 const removeRole = async(req,res)=>{
     const {id} = req.params  
-    const result = await removeRoleService(id)
+    const result = await removeRoleService(id).catch(err => {
+      throw new APIError("MongooseError", 500, true, err.message);
+  });
     res.status(200).json(result)
 
 }
