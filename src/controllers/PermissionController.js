@@ -33,7 +33,7 @@ const addPermissionController = async (req,res)=>{
         
         createPermission : createPermission,
         viewPermission : viewPermission,
-        "addPermission" : addPermissions,
+        addPermission : addPermissions,
         updatePermission : updatePermission,
     
         createClient : createClient,
