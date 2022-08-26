@@ -15,6 +15,7 @@ const {
   getAResourceTest,
   resourceOnBench,
   searchResource,
+  getUserWithPasswordfromResource
 } = require("../Service/ResourceService");
 
 const { addToken } = require("../Service/forgetPasswordService");
@@ -265,6 +266,23 @@ const getProjectsOfResourcesController = async (req, res) => {
   }
   res.status(200).json(_projects);
 };
+
+//get Password holder user
+
+const getUserWithPassword= async (req, res) => {
+  const user = await getUserWithPasswordfromResource().catch((err)=>{
+    throw new APIError("DatabaseError", 500, true, err.message);
+  })
+  if(!user){
+    throw new HTTP404Error("No user found");
+  }
+  res.status(200).json(user);
+}
+
+
+
+
+
 module.exports.addResource = addResourceController;
 module.exports.getAllResources = getResourcesController;
 module.exports.removeResource = removeResourceController;
@@ -276,5 +294,5 @@ module.exports.verifyPassword = verifyCode;
 module.exports.changeForgottenPassword = changeForgottenPassword;
 module.exports.getResourceByKeyword = getResourceByKeyword;
 module.exports.getResourceOnBench = getResourceOnBench;
-module.exports.getProjectsOfResourcesController =
-  getProjectsOfResourcesController;
+module.exports.getProjectsOfResourcesController = getProjectsOfResourcesController;
+module.exports.getUserWithPassword = getUserWithPassword;

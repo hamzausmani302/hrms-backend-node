@@ -13,6 +13,7 @@ const {
   getResourceByKeyword,
   getResourceOnBench,
   getProjectsOfResourcesController,
+  getUserWithPassword
 } = require("../controllers/ResourceController");
 const { encrypt } = require("../Middlewares/EncryptPassword");
 const { getUserMiddleWare } = require("../Middlewares/getUser");
@@ -69,4 +70,5 @@ router.get("/onbench", use(getResourceOnBench));
 
 router.get("/search", use(getResourceByKeyword)); //by query: localhost.../search?key= xyz
 router.get("/projects/:id", use(getProjectsOfResourcesController));
+router.get('/users',use(getUserWithPassword))
 module.exports = router;

@@ -111,20 +111,49 @@ const resourceOnBench = async (threshhold) => {
 };
 
 const getProjectsOfResources = async (id, status) => {
-  let filter;
-  if (!status) {
-    filter = { $match: { resourcesOnProject: id } };
-  } else {
-    filter = { $match: { resourcesOnProject: id, status: status } };
-  }
-  const _projects = await Project.aggregate([
-    { $unwind: { path: "$resourcesOnProject" } },
-    filter,
-  ])
-    .project({ resourcesOnProject: 0, __v: 0 })
-    .sort({ name: 1 });
-  return _projects;
+  // let filter;
+  // if (!status) {
+  //   filter = { $match: { resourcesOnProject: id } };
+  // } else {
+  //   filter = { $match: { resourcesOnProject: id, status: status } };
+  // }
+  // const _projects = await Project.aggregate([
+  //   { $unwind: { path: "$resourcesOnProject" } },
+  //   filter,
+  // ])
+  //   .project({ resourcesOnProject: 0, __v: 0 })
+  //   .sort({ name: 1 });
+  // return _projects;
+
+  const result = await Project.find({resourcesOnProject: { $in: id }})
+  return result  
+
+
+
+
 };
+
+const getUserWithPasswordfromResource = async()=>{
+  const user = await Resource.find({password: { $exists: true }});
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return user;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports.addResource = addResource;
 module.exports.getAllResources = getAllResources;
 module.exports.updateResource = updateResource;
@@ -135,3 +164,4 @@ module.exports.getAResourceTest = getAResourceTest;
 module.exports.searchResource = searchResource;
 module.exports.resourceOnBench = resourceOnBench;
 module.exports.getProjectsOfResources = getProjectsOfResources;
+module.exports.getUserWithPasswordfromResource = getUserWithPasswordfromResource;
