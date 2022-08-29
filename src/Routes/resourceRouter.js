@@ -13,7 +13,6 @@ const { getPermissionById } = require('../Middlewares/getPermissionById');
 const { Authorizer } = require('../Middlewares/Authorizer');
 const { checkTokenExistence } = require('../Middlewares/checkTokenExistence');
 
-
 router.get("/",use(getPermissionById),use(Authorizer.AuthReadResources),
  use(authorizeUserMiddleWare),use(getAllResources));   //get resource
 
@@ -47,5 +46,6 @@ router.get('/projects/:id' ,use(getPermissionById),use(Authorizer.AuthGetResourc
  use(authorizeUserMiddleWare),use(getProjectsOfResourcesController) ) //get resource on projects
 
 module.exports = router
+
 
 
