@@ -3,6 +3,7 @@ const Resource =require("../Model/resource.schema");
 const { HTTP400Error, HTTP404Error, APIError } = require("../Utils/Error/CustomError");
 const HttpStatusCode = require("../Utils/Error/HttpStatusCode");
 
+// checking user exist in db
 
 const getUserMiddleWare =async  (req,res,next)=>{
     const {email} = req.body;

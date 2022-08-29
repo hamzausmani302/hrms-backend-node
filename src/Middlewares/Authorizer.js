@@ -112,8 +112,9 @@ class Authorizer {
     }
 
     static AuthReadPermission(req, res, next) {
-        const { readPermissions } = req.permission;
-        if (readPermissions === false) {
+        const { readPermission } = req.permission;
+        console.log(readPermission);
+        if (readPermission === false) {
             throw new HTTP403Error("Not allowed to access resource");
         }
         next();

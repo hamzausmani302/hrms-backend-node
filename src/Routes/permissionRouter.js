@@ -13,7 +13,6 @@ router.get("/", use(getPermissionById), use(Authorizer.AuthReadPermission),     
 
 router.post("/", use(getPermissionById), use(Authorizer.AuthCreatePermission),      // add permissions
     use(authorizeUserMiddleWare), use(addPermissions));
-
 router.put("/:id", use(getPermissionById), use(Authorizer.AuthUpdatePermission),    // update permissions
     use(authorizeUserMiddleWare), use(updatePermission))
 

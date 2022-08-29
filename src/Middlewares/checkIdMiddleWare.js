@@ -1,5 +1,7 @@
 const { HTTP400Error, APIError, HTTP404Error } = require("../Utils/Error/CustomError");
 const Resource = require("../Model/resource.schema")
+
+//find user by id in db
 const checkIdMiddleWare =async (req,res,next)=>{
     const {id} = req.params;
     if(!id){
@@ -13,11 +15,6 @@ const checkIdMiddleWare =async (req,res,next)=>{
     }
     req.body.id=  id;
     next();
-    
-
-
-
-
 }
 
 

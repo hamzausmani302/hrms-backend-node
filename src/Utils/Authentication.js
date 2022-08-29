@@ -12,7 +12,7 @@ const JWTAUTH_SIGN = (payload)=>{               //function for generating token 
 } 
 
 
-const JWTAUTH_VERIFY = (token) =>{
+const JWTAUTH_VERIFY = (token) =>{              // verify token  
     console.log("A SECRET KEY ",process.env.SECRET_KEY)
     var decoded = jwt.verify(token, process.env.SECRET_KEY);
     return decoded;

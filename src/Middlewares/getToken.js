@@ -6,7 +6,7 @@ const { HTTP400Error, HTTP404Error, APIError } = require("../Utils/Error/CustomE
 const HttpStatusCode = require("../Utils/Error/HttpStatusCode");
 const { differenceFromDate } = require("../Utils/Date");
 
-
+// checking token exist in db
 const getTokenMiddleWare =async  (req,res,next)=>{
     const {id} = req.params;
     console.log(id)
@@ -16,7 +16,7 @@ const getTokenMiddleWare =async  (req,res,next)=>{
     const resetDoc = await ResetPasswordToken.findOne({_id : id}).catch(err=>{
         throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true , err.message);
     })
-    console.log(differenceFromDate(new Date(resetDoc.createdAt )));
+    //if token exist or not used in 2 mints
     if(!resetDoc || differenceFromDate(new Date(resetDoc.createdAt )) > 120 || resetDoc.used == true){
         throw new HTTP404Error("The link is expired");
     }

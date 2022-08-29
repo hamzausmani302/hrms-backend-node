@@ -18,7 +18,7 @@ const PermissionSchema = mongoose.Schema({
     updateRoles : {type : Boolean , default : false },
     
     createPermission : {type : Boolean , default : false },
-    readPermissions : {type : Boolean , default : false },
+    readPermission : {type : Boolean , default : false },
     deletePermission : {type : Boolean , default : false },
     updatePermission : {type : Boolean , default : false },
 
