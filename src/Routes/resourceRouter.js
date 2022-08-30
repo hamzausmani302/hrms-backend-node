@@ -1,74 +1,51 @@
-const express = require("express");
+const express = require('express')
+const router = express.Router()
+const { forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench, getProjectsOfResourcesController} = require('../controllers/ResourceController');
 
-const {
-  forgotPassword,
-  addResource,
-  getAllResources,
-  updateResource,
-  removeResource,
-  loginAsResource,
-  updateSkills,
-  verifyPassword,
-  changeForgottenPassword,
-  getResourceByKeyword,
-  getResourceOnBench,
-  getProjectsOfResourcesController,
-  getUserWithPassword
-} = require("../controllers/ResourceController");
-const { encrypt } = require("../Middlewares/EncryptPassword");
-const { getUserMiddleWare } = require("../Middlewares/getUser");
-const { sendMail } = require("../Utils/Mailer");
-const { getTokenMiddleWare } = require("../Middlewares/getToken");
-const { checkIdMiddleWare } = require("../Middlewares/checkIdMiddleWare");
-const { use } = require("../Middlewares/CatchError");
-const {
-  APIError,
-  HTTP400Error,
-  HTTP403Error,
-} = require("../Utils/Error/CustomError");
-const { authorizeUserMiddleWare } = require("../Middlewares/auth");
-const { getPermissionById } = require("../Middlewares/getPermissionById");
-const { Authorizer } = require("../Middlewares/Authorizer");
-const { checkTokenExistence } = require("../Middlewares/checkTokenExistence");
+//middlewares for checking authorize user
+const {encrypt} = require('../Middlewares/EncryptPassword');
+const {getUserMiddleWare} = require("../Middlewares/getUser");
+const {getTokenMiddleWare} = require('../Middlewares/getToken');
+const {checkIdMiddleWare}  = require('../Middlewares/checkIdMiddleWare');
+const {use} = require('../Middlewares/CatchError');
+const { authorizeUserMiddleWare } = require('../Middlewares/auth');
+const { getPermissionById } = require('../Middlewares/getPermissionById');
+const { Authorizer } = require('../Middlewares/Authorizer');
+const { checkTokenExistence } = require('../Middlewares/checkTokenExistence');
 
-// use(Authorizer.AuthGetDeveloper) ,
+router.get("/",use(getPermissionById),use(Authorizer.AuthReadResources),
+ use(authorizeUserMiddleWare),use(getAllResources));   //get resource
 
-const router = express.Router();
+router.post("/",use(getPermissionById),use(Authorizer.AuthCreateResources),
+encrypt,use(authorizeUserMiddleWare),use(addResource))   //create resource
 
-router.get(
-  "/",
-  use(getPermissionById),
-  use(authorizeUserMiddleWare),
-  use(getAllResources)
-);
+router.put("/:id",use(Authorizer.AuthUpdateResources), //update resource
+use(authorizeUserMiddleWare),use(updateResource))
 
-router.post("/", encrypt, use(addResource));
+router.delete("/:id",use(Authorizer.AuthRemoveResources), //remove resource
+use(authorizeUserMiddleWare), use(removeResource))
 
-router.put("/:id", use(updateResource));
+router.post("/login", use(loginAsResource))             //login resource
 
-router.delete("/:id", use(removeResource));
+router.put("/skills/:id",use(Authorizer.AuthUpdateResources), //update skills of resource 
+use(authorizeUserMiddleWare), use(updateSkills))
 
-router.post("/login", use(loginAsResource));
+router.post("/recover-password", use(checkTokenExistence), //recover password
+use(getUserMiddleWare), use(forgotPassword))
 
-router.put("/skills/:id", use(updateSkills));
+router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword)) //check with recover code 
 
-router.post(
-  "/recover-password",
-  use(checkTokenExistence),
-  use(getUserMiddleWare),
-  use(forgotPassword)
-);
+router.post("/new-password/:id", use(checkIdMiddleWare) , use(changeForgottenPassword)) //new password 
 
-router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword));
+router.get('/onbench',use(Authorizer.AuthReadResources),use(getResourceOnBench)) //get resource on bench
 
-router.post(
-  "/new-password/:id/:tid",
-  use(checkIdMiddleWare),
-  use(changeForgottenPassword)
-);
-router.get("/onbench", use(getResourceOnBench));
+router.get('/search',use(getPermissionById),use(Authorizer.AuthGetResources),
+ use(authorizeUserMiddleWare),use(getResourceByKeyword));      //by query: localhost.../search?key= xyz
 
-router.get("/search", use(getResourceByKeyword)); //by query: localhost.../search?key= xyz
-router.get("/projects/:id", use(getProjectsOfResourcesController));
-router.get('/users',use(getUserWithPassword))
-module.exports = router;
+router.get('/projects/:id' ,use(getPermissionById),use(Authorizer.AuthGetResources),
+ use(authorizeUserMiddleWare),use(getProjectsOfResourcesController) ) //get resource on projects
+
+module.exports = router
+
+
+

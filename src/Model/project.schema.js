@@ -23,7 +23,7 @@ const ProjectSchema = mongoose.Schema({
         type :Date ,
         validate: {
             validator: function(v) {
-              return this.startingDate > this.createdAt;
+              return this.startingDate >= this.createdAt;
             },
             message: 'Starting date should be smaller'
           },

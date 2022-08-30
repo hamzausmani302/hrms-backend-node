@@ -1,6 +1,6 @@
 const roleSchema = require('../Model/role.schema')
 
-const getRoleWithPermissionsService = async ()=>{
+const getRoleWithPermissionsService = async ()=>{  
     const aggregation = [
         
             {

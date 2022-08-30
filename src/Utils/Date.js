@@ -17,11 +17,8 @@ const secondInTwoHours = ()=>{
 }
 const differenceFromDate = ( d1 , d2=Date.now() )=>{
     const seconds = Math.abs(d2-d1)/1000;
-    
+    console.log(seconds)    
     return Math.ceil(seconds)
-    
-
-    
 }
 
 

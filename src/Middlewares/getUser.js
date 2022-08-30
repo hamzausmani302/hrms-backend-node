@@ -6,6 +6,7 @@ const {
 } = require("../Utils/Error/CustomError");
 const HttpStatusCode = require("../Utils/Error/HttpStatusCode");
 
+// checking user exist in db
 const getUserMiddleWare = async (req, res, next) => {
   const { email } = req.body;
   if (!email) {
@@ -26,5 +27,4 @@ const getUserMiddleWare = async (req, res, next) => {
   req.body.user = user;
   next();
 };
-
 module.exports.getUserMiddleWare = getUserMiddleWare;
