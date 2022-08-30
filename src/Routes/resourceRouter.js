@@ -17,18 +17,18 @@ router.get("/",use(getPermissionById),use(Authorizer.AuthReadResources),
  use(authorizeUserMiddleWare),use(getAllResources));   //get resource
 
 router.post("/",use(getPermissionById),use(Authorizer.AuthCreateResources),
-encrypt,use(addResource))                              //create resource
+encrypt,use(authorizeUserMiddleWare),use(addResource))   //create resource
 
 router.put("/:id",use(Authorizer.AuthUpdateResources), //update resource
-use(updateResource))
+use(authorizeUserMiddleWare),use(updateResource))
 
 router.delete("/:id",use(Authorizer.AuthRemoveResources), //remove resource
- use(removeResource))
+use(authorizeUserMiddleWare), use(removeResource))
 
 router.post("/login", use(loginAsResource))             //login resource
 
 router.put("/skills/:id",use(Authorizer.AuthUpdateResources), //update skills of resource 
- use(updateSkills))
+use(authorizeUserMiddleWare), use(updateSkills))
 
 router.post("/recover-password", use(checkTokenExistence), //recover password
 use(getUserMiddleWare), use(forgotPassword))

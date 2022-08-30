@@ -9,9 +9,8 @@ module.exports.checkTokenExistence =async  (req,res,next)=>{
     const Token = await resetPassword.find({email :email , used: false }).catch(err=>{
         throw new APIError("DatabaseError" , HttpStatusCode.INTERNAL_SERVER , true ,err.message)
     })
-    console.log(Token);
-   
-    if(Token && Token.length > 0){
+
+    if(Token.length > 0 && differenceFromDate(new Date(Token[0].createdAt )) < 120 ){
         throw new APIError("DuplicateEntry" , HttpStatusCode.INTERNAL_SERVER , true , "Duplicate token");
     }
     next();
