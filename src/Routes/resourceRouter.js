@@ -44,7 +44,8 @@ router.get('/search',use(getPermissionById),use(Authorizer.AuthGetResources),
 
 router.get('/projects/:id' ,use(getPermissionById),use(Authorizer.AuthGetResources),
  use(authorizeUserMiddleWare),use(getProjectsOfResourcesController) ) //get resource on projects
-
+router.get('/users',use(getPermissionById),use(Authorizer.AuthReadResources),
+ use(authorizeUserMiddleWare),use(getUserWithPassword))
 module.exports = router
 
 
