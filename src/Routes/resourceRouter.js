@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench, getProjectsOfResourcesController} = require('../controllers/ResourceController');
+const { forgotPassword , addResource , getAllResources , updateResource , removeResource , loginAsResource, updateSkills, verifyPassword, changeForgottenPassword, getResourceByKeyword , getResourceOnBench, getProjectsOfResourcesController,getUserWithPassword} = require('../controllers/ResourceController');
 
 //middlewares for checking authorize user
 const {encrypt} = require('../Middlewares/EncryptPassword');
