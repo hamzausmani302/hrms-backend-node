@@ -37,7 +37,8 @@ router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword)) //check
 
 router.post("/new-password/:id", use(checkIdMiddleWare) , use(changeForgottenPassword)) //new password 
 
-router.get('/onbench',use(Authorizer.AuthReadResources),use(getResourceOnBench)) //get resource on bench
+router.get('/onbench',use(getPermissionById),use(Authorizer.AuthReadResources),
+ use(authorizeUserMiddleWare),use(getResourceOnBench)) //get resource on bench
 
 router.get('/search',use(getPermissionById),use(Authorizer.AuthGetResources),
  use(authorizeUserMiddleWare),use(getResourceByKeyword));      //by query: localhost.../search?key= xyz
