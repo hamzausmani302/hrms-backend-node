@@ -19,15 +19,15 @@ router.get("/",use(getPermissionById),use(Authorizer.AuthReadResources),
 router.post("/",use(getPermissionById),use(Authorizer.AuthCreateResources),
 encrypt,use(authorizeUserMiddleWare),use(addResource))   //create resource
 
-router.put("/:id",use(Authorizer.AuthUpdateResources), //update resource
+router.put("/:id",use(getPermissionById)  ,use(Authorizer.AuthUpdateResources), //update resource
 use(authorizeUserMiddleWare),use(updateResource))
 
-router.delete("/:id",use(Authorizer.AuthRemoveResources), //remove resource
+router.delete("/:id",use(getPermissionById),use(Authorizer.AuthRemoveResources), //remove resource
 use(authorizeUserMiddleWare), use(removeResource))
 
 router.post("/login", use(loginAsResource))             //login resource
 
-router.put("/skills/:id",use(Authorizer.AuthUpdateResources), //update skills of resource 
+router.put("/skills/:id",use(getPermissionById),use(Authorizer.AuthUpdateResources), //update skills of resource 
 use(authorizeUserMiddleWare), use(updateSkills))
 
 router.post("/recover-password", use(checkTokenExistence), //recover password
@@ -35,7 +35,11 @@ use(getUserMiddleWare), use(forgotPassword))
 
 router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword)) //check with recover code 
 
-router.post("/new-password/:id", use(checkIdMiddleWare) , use(changeForgottenPassword)) //new password 
+router.post(
+    "/new-password/:id/:tid",
+    use(checkIdMiddleWare),
+    use(changeForgottenPassword)
+  ); //new password 
 
 router.get('/onbench',use(getPermissionById),use(Authorizer.AuthReadResources),
  use(authorizeUserMiddleWare),use(getResourceOnBench)) //get resource on bench
