@@ -1,7 +1,6 @@
 const Resource = require("../Model/resource.schema");
 const { AUTHENTICATE_HASH, HASH_PASSWORD } = require("../Utils/Encryption");
-const { JWT_SIGN, JWT_VERIFY } = require("../Utils/Authentication");
-const path = require("path");
+const { JWT_SIGN} = require("../Utils/Authentication");
 const { ResourceInfo } = require("../DTO/ResourceInfo");
 
 const {
@@ -129,7 +128,7 @@ const loginAsResource = async (req, res) => {
       throw new APIError("mongoose error", 500, true, err.message);
     });
 
-    // console.log(_resource);
+    
     if (_resource && _resource.length == 0) {
       throw new HTTP404Error("Incorrect username or password");
     }
@@ -149,7 +148,6 @@ const loginAsResource = async (req, res) => {
     }
     throw new HTTP404Error("Incorrect username of password");
   } catch (err) {
-    console.log(err);
     res.status(404).json({ error: err });
   }
 };
@@ -192,7 +190,7 @@ const forgotPassword = async (req, res) => {
 const verifyCode = async (req, res) => {
   const { id } = req.params;
   const { code, resetDoc } = req.body;
-  console.log(id, resetDoc, code);
+
   if (code != resetDoc.code) {
     throw new HTTP403Error("The confirmation code donot match");
   }
@@ -219,10 +217,9 @@ const verifyCode = async (req, res) => {
 };
 
 const changeForgottenPassword = async (req, res) => {
-  const { id, tid, password } = req.body;
+  const { id,password } = req.body;
   const hash = await HASH_PASSWORD(password);
-  console.log("hash", hash);
-
+ 
   const updatedResult = await Resource.findByIdAndUpdate(id, {
     password: hash,
   }).catch((err) => {
@@ -257,7 +254,6 @@ const getResourceOnBench = async (req, res) => {
 const getProjectsOfResourcesController = async (req, res) => {
   const { id } = req.params;
   const { status } = req.query;
-  console.log(id, status);
   const _projects = await getProjectsOfResources(id, status).catch((err) => {
     throw new APIError("DatabaseError", 500, true, err.message);
   });

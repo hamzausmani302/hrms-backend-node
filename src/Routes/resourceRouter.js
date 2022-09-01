@@ -36,7 +36,7 @@ use(getUserMiddleWare), use(forgotPassword))
 router.post("/verify/:id", use(getTokenMiddleWare), use(verifyPassword)) //check with recover code 
 
 router.post(
-    "/new-password/:id/:tid",
+    "/new-password/:id",
     use(checkIdMiddleWare),
     use(changeForgottenPassword)
   ); //new password 

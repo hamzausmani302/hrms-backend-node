@@ -1,5 +1,4 @@
 const Resource = require("../Model/resource.schema.js");
-const mongoose = require("mongoose");
 const Project = require("../Model/project.schema.js");
 const addResource = async (resource) => {
   const result = await resource.save();
@@ -56,7 +55,6 @@ const getAResource = async (filter) => {
 
 const getAResourceTest = async (filter) => {
   const email = filter.email;
-  console.log("d-2", email);
   const aggregation = [
     {
       $match: {
@@ -99,7 +97,6 @@ const getAResourceTest = async (filter) => {
     },
   ];
   const _resource = await Resource.aggregate(aggregation);
-  console.log("debug 1", _resource, aggregation);
   return _resource;
 };
 
@@ -111,26 +108,9 @@ const resourceOnBench = async (threshhold) => {
 };
 
 const getProjectsOfResources = async (id, status) => {
-  // let filter;
-  // if (!status) {
-  //   filter = { $match: { resourcesOnProject: id } };
-  // } else {
-  //   filter = { $match: { resourcesOnProject: id, status: status } };
-  // }
-  // const _projects = await Project.aggregate([
-  //   { $unwind: { path: "$resourcesOnProject" } },
-  //   filter,
-  // ])
-  //   .project({ resourcesOnProject: 0, __v: 0 })
-  //   .sort({ name: 1 });
-  // return _projects;
 
   const result = await Project.find({resourcesOnProject: { $in: id }})
   return result  
-
-
-
-
 };
 
 const getUserWithPasswordfromResource = async()=>{
